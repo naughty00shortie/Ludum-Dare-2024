@@ -19,6 +19,12 @@ public class Cell {
     this.rectangle = new Rectangle(xCoOrdinate * offset, yCoOrdinate * offset, size, size);
   }
 
+  public Cell(int xCoOrdinate, int yCoOrdinate, Rectangle rect) {
+    this.xCoOrdinate = xCoOrdinate;
+    this.yCoOrdinate = yCoOrdinate;
+    this.rectangle = rect;
+  }
+
   public Rectangle getRectangle() {
     return rectangle;
   }
@@ -70,6 +76,8 @@ public class Cell {
   public int getY() {
     return yCoOrdinate;
   }
+
+
 
   @Override
   public boolean equals(Object o) {
