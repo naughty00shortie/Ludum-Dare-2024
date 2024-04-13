@@ -43,13 +43,13 @@ public class ChessBoard extends ApplicationAdapter {
           shapeRenderer.setColor(1, 1, 1, 1);
           if (j == 0) //white squares in the first row
             setFriendlySummoningPositionLight();
-          if (j == 7) //white squares in the last row
+          if (j == BOARD_SIZE-1) //white squares in the last row
             setEnemySummoningPositionWhite();
         } else {//Else block for black squares
           setSummoningPositionBlack();
           if (j == 0)
             setFriendlySummoningPositionBlack();//black squares in the first row
-          if (j == 7)
+          if (j == BOARD_SIZE-1)
             setEnemySummoningPositionBlack();//black squares in the last row
         }
         shapeRenderer.rect(board[i][j].x+100, board[i][j].y+100, board[i][j].width, board[i][j].height);
