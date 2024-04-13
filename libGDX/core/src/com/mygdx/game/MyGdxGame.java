@@ -13,12 +13,8 @@ public class MyGdxGame extends ApplicationAdapter {
 
   ChessBoard chessBoard;
 
-  SummoningCircle summoningCircle;
-
   @Override
   public void create() {
-    //summoningCircle = new SummoningCircle();
-    //summoningCircle.create();
     chessBoard = new ChessBoard();
     chessBoard.create();
   }

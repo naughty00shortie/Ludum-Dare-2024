@@ -2,6 +2,7 @@ package com.mygdx.game;
 
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.mygdx.game.movement.Cell;
 
 import java.awt.*;
 
@@ -15,8 +16,7 @@ public class ChessBoard extends ApplicationAdapter {
 
   public static final int Y_OFFSET = 100;
 
-
-  private Rectangle[][] board = new Rectangle[BOARD_SIZE][BOARD_SIZE];
+  private final Cell[][] board = new Cell[BOARD_SIZE][BOARD_SIZE];
 
   private ShapeRenderer shapeRenderer;
 
@@ -24,12 +24,13 @@ public class ChessBoard extends ApplicationAdapter {
 
   private boolean renderEnemySummoningPosition = false;
 
+
   @Override
   public void create() {
     shapeRenderer = new ShapeRenderer();
     for (int i = 0; i < BOARD_SIZE; i++) {
       for (int j = 0; j < BOARD_SIZE; j++) {
-        board[i][j] = new Rectangle(i * X_OFFSET, j * Y_OFFSET, SIZE, SIZE);
+        board[i][j] = new Cell(i * X_OFFSET, j * Y_OFFSET, SIZE);
       }
     }
   }
@@ -43,16 +44,15 @@ public class ChessBoard extends ApplicationAdapter {
           shapeRenderer.setColor(1, 1, 1, 1);
           if (j == 0) //white squares in the first row
             setFriendlySummoningPositionLight();
-          if (j == BOARD_SIZE-1) //white squares in the last row
+          if (j == BOARD_SIZE - 1) //white squares in the last row
             setEnemySummoningPositionWhite();
         } else {//Else block for black squares
           setSummoningPositionBlack();
-          if (j == 0)
-            setFriendlySummoningPositionBlack();//black squares in the first row
-          if (j == BOARD_SIZE-1)
-            setEnemySummoningPositionBlack();//black squares in the last row
+          if (j == 0) setFriendlySummoningPositionBlack();//black squares in the first row
+          if (j == BOARD_SIZE - 1) setEnemySummoningPositionBlack();//black squares in the last row
         }
-        shapeRenderer.rect(board[i][j].x+100, board[i][j].y+100, board[i][j].width, board[i][j].height);
+        Rectangle rect = board[i][j].getRectangle();
+        shapeRenderer.rect(rect.x + 100, rect.y + 100, rect.width, rect.height);
       }
     }
     shapeRenderer.end();
