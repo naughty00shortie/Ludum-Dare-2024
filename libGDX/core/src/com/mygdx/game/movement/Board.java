@@ -59,6 +59,21 @@ public class Board {
     cells[newX][newY].placePiece(p);
   }
 
+  public void movePiece(CoOrdinatePair from, CoOrdinatePair to) {
+    getCell(from).ifPresentOrElse(fromCell -> {
+      fromCell.getPiece().ifPresentOrElse(piece -> {
+        fromCell.removePiece();
+        getCell(to).ifPresentOrElse(cell -> cell.placePiece(piece), () -> {
+          throw new RuntimeException(to + ", cell does not exist on board");
+        });
+      }, () -> {
+        throw new RuntimeException("No piece at " + from);
+      });
+    }, () -> {
+      throw new RuntimeException(from + ", cell does not exist on board");
+    });
+  }
+
   /**
    * Takes the piece on the 'from' coordinate and places it on the 'to' coordinate.
    * It removes any existing piece on 'to'
