@@ -31,4 +31,23 @@ class GruntTest {
     assertTrue(moveSet.contains(origin.up().right()));
   }
 
+  @Test
+  void allyBlocking() {
+    CoOrdinatePair origin = new CoOrdinatePair(0, 0);
+    board.getCell(origin.up()).get().placePiece(new Grunt());
+    Set<CoOrdinatePair> moveSet = grunt.moveSet(origin, board);
+    assertEquals(1, moveSet.size(), "Only forward-right is possible.");
+    assertTrue(moveSet.contains(origin.up().right()));
+  }
+
+  @Test
+  void enemyDoesNotBlock() {
+    CoOrdinatePair origin = new CoOrdinatePair(0, 0);
+    board.getCell(origin.up()).get().placePiece(new Grunt(false));
+    Set<CoOrdinatePair> moveSet = grunt.moveSet(origin, board);
+    assertEquals(2, moveSet.size(), "Only forward (capture) and forward-right are possible.");
+    assertTrue(moveSet.contains(origin.up()));
+    assertTrue(moveSet.contains(origin.up().right()));
+  }
+
 }
