@@ -64,12 +64,13 @@ public class Board {
     for (int i = 0; i < cells.length; i++) {
       for (int j = 0; j < cells[i].length; j++) {
         Cell cell = cells[i][j];
-        if (cell.isOccupied()) pieces.add(cell);
+        if (cell.isOccupied()) {
+          pieces.add(cell);
+        }
       }
     }
     return pieces;
   }
-
 
   public Set<Cell> getSummonableCells() {
     Set<Cell> summonablePositions = new HashSet<>();
@@ -77,8 +78,12 @@ public class Board {
     for (int i = 0; i < cells.length; i++) {
       for (int j = 0; j < cells[i].length; j++) {
         Cell cell = cells[i][j];
-        if (!cell.isOccupied() && cellIsAdjacentToPiece(cell, pieces)) summonablePositions.add(cell);
-        if(j == 0) summonablePositions.add(cell);
+        if (!cell.isOccupied() && cellIsAdjacentToPiece(cell, pieces)) {
+          summonablePositions.add(cell);
+        }
+        if (j == 0) {
+          summonablePositions.add(cell);
+        }
       }
     }
     return summonablePositions;
@@ -89,17 +94,28 @@ public class Board {
     int cellX = cell.getX();
     int cellY = cell.getY();
     for (Cell piece : pieces) {
-      if (piece.getX() + 1 == cellX && piece.getY() + 1 == cellY) return true; // top right diag
-      if (piece.getX() - 1 == cellX && piece.getY() - 1 == cellY) return true; // bottom left diag
-      if (piece.getX() + 1 == cellX && piece.getY() - 1 == cellY) return true; // bottom right
+      if (piece.getX() + 1 == cellX && piece.getY() + 1 == cellY) {
+        return true; // top right diag
+      }
+      if (piece.getX() - 1 == cellX && piece.getY() - 1 == cellY) {
+        return true; // bottom left diag
+      }
+      if (piece.getX() + 1 == cellX && piece.getY() - 1 == cellY) {
+        return true; // bottom right
+      }
       // diag
-      if (piece.getX() - 1 == cellX && piece.getY() + 1 == cellY) return true; // top left diag
-      if(piece.getX() == cellX && (piece.getY() + 1 == cellY || piece.getY() - 1 == cellY)) return true; // up or down one
-      if(piece.getY() == cellY && (piece.getX() + 1 == cellX || piece.getX() - 1 == cellX)) return true; // left or right one
+      if (piece.getX() - 1 == cellX && piece.getY() + 1 == cellY) {
+        return true; // top left diag
+      }
+      if (piece.getX() == cellX && (piece.getY() + 1 == cellY || piece.getY() - 1 == cellY)) {
+        return true; // up or down one
+      }
+      if (piece.getY() == cellY && (piece.getX() + 1 == cellX || piece.getX() - 1 == cellX)) {
+        return true; // left or right one
+      }
     }
     return false;
   }
-
 
   /**
    * Get the Cell at this CoOrdinate
@@ -118,9 +134,12 @@ public class Board {
   private boolean isInBounds(CoOrdinatePair coOrdinatePair) {
     int x = coOrdinatePair.getX();
     int y = coOrdinatePair.getY();
-    if (x < 0 || x >= BOARD_SIZE) return false;
-    if (y < 0 || y >= BOARD_SIZE) return false;
+    if (x < 0 || x >= BOARD_SIZE) {
+      return false;
+    }
+    if (y < 0 || y >= BOARD_SIZE) {
+      return false;
+    }
     return true;
   }
-
 }
