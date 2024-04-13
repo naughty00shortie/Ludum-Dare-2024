@@ -1,5 +1,9 @@
 package com.mygdx.game.movement;
 
+import java.util.HashSet;
+import java.util.Optional;
+import java.util.Set;
+
 /**
  * Top level abstraction. The board is the source of most queries from the GUI.
  * Chess board is made up of ranks --- and files | .
@@ -22,6 +26,11 @@ public class Board {
     this.cells = board;
   }
 
+  public Set<CoOrdinatePair> getValidMoves(int x, int y) {
+    Piece p = cells[x][y].getPiece().orElseThrow(() -> new RuntimeException());
+    return p.moveSet(x, y);
+  }
+
   public void movePiece(Piece piece, int oldX, int oldY, int newX, int newY) {
     // TODO bounds checking
     // summon piece
@@ -32,18 +41,41 @@ public class Board {
   }
 
   public void summon(Piece piece, int x, int y) {
+    cells[x][y].placePiece(piece);
+  }
 
+  public Set<Cell> getCellsWithPieces() {
+    Set<Cell> pieces = new HashSet<>();
+    for (int i = 0; i < cells.length; i++) {
+      for (int j = 0; j < cells[i].length; j++) {
+        Cell cell = cells[i][j];
+        if (cell.isOccupied()) pieces.add(cell);
+      }
+    }
+    return pieces;
   }
 
 
-  /*
-
-  2D array
-
-  getRank List  Cell cells know how they should be displayed
-  getFile List  Cell
-
+  /**
+   * Get the Cell at this CoOrdinate
+   *
+   * @param coOrdinatePair to retrieve a Cell from.
+   * @return Cell if CoOrdinate is within the bounds of the Board.
    */
+  public Optional<Cell> getCell(CoOrdinatePair coOrdinatePair) {
+    if (isInBounds(coOrdinatePair)) {
+      return Optional.of(cells[coOrdinatePair.getX()][coOrdinatePair.getY()]);
+    } else {
+      return Optional.empty();
+    }
+  }
 
+  private boolean isInBounds(CoOrdinatePair coOrdinatePair) {
+    int x = coOrdinatePair.getX();
+    int y = coOrdinatePair.getY();
+    if (x < 0 || x >= BOARD_SIZE) return false;
+    if (y < 0 || y >= BOARD_SIZE) return false;
+    return true;
+  }
 
 }

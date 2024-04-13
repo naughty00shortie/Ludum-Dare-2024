@@ -71,4 +71,19 @@ public class Cell {
     return yCoOrdinate;
   }
 
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) return true;
+    if (o == null || getClass() != o.getClass()) return false;
+
+    Cell cell = (Cell) o;
+    return xCoOrdinate == cell.xCoOrdinate && yCoOrdinate == cell.yCoOrdinate;
+  }
+
+  @Override
+  public int hashCode() {
+    int result = xCoOrdinate;
+    result = 31 * result + yCoOrdinate;
+    return result;
+  }
 }
