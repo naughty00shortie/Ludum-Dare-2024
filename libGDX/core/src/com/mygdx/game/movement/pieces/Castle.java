@@ -31,8 +31,13 @@ public class Castle implements Piece {
     //x +
     Cell origin = board.getCell(new CoOrdinatePair(xOrigin, yOrigin)).orElseThrow(() -> new RuntimeException("X or Y origin out of bounds"));
     int boardSize = board.getCells().length;
-    for(int i = xOrigin; i < boardSize; i++) {
-
+    for(int i = xOrigin; i < boardSize; i++) { // check right
+      CoOrdinatePair coOrdinatePair = new CoOrdinatePair(i, yOrigin);
+      Cell c = board.getCell(coOrdinatePair).get();
+      if(c.isOccupied()) {
+        break;
+      }
+      possibleMoves.add(coOrdinatePair);
     }
     Cell nextRight = CellNavigationUtils.moveOneCellRight(origin);
 //    CoOrdinatePair o = new CoOrdinatePair(xOrigin, yOrigin);
