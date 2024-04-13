@@ -6,7 +6,9 @@ import java.util.Set;
  * Candace: Provide a concrete implementation for Piece.
  */
 public interface Piece {
-
+  /**
+   * @return true if your piece. false if enemy piece
+   */
   boolean isPlayerPiece();
 
   /**
@@ -17,6 +19,5 @@ public interface Piece {
    * @see Cell#isOccupied() might be queried along with Cell#getPiece() -> Piece#isPlayerPiece
    * to determine if it is a capturable move, etc.
    */
-  Set<CoOrdinatePair> moveSet(int xOrigin, int yOrigin);
-
+  Set<CoOrdinatePair> moveSet(int xOrigin, int yOrigin, Cell[][] cells);
 }
