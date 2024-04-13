@@ -6,22 +6,26 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.ScreenUtils;
 
 public class MyGdxGame extends ApplicationAdapter {
-	ChessBoardRenderer chessBoardRenderer;
+	SpriteBatch batch;
+	Texture img;
 	
 	@Override
 	public void create () {
-		chessBoardRenderer = new ChessBoardRenderer();
-		chessBoardRenderer.create();
+		batch = new SpriteBatch();
+		img = new Texture("badlogic.jpg");
 	}
 
 	@Override
 	public void render () {
 		ScreenUtils.clear(1, 0, 0, 1);
-		chessBoardRenderer.render();
+		batch.begin();
+		batch.draw(img, 0, 0);
+		batch.end();
 	}
 	
 	@Override
 	public void dispose () {
-		chessBoardRenderer.dispose();
+		batch.dispose();
+		img.dispose();
 	}
 }
