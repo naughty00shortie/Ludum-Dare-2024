@@ -33,10 +33,6 @@ public class Board {
 
   }
 
-  private void buildBoard() {
-  public Board() {
-    buildBoardCells();
-  }
 
   /**
    * Initialise, or reset, the cells on this board.
@@ -108,27 +104,10 @@ public class Board {
     return summonablePositions;
   }
 
-  // IANDRO: "this is nasty, so fix it if it doesn't work"
-  private boolean cellIsAdjacentToPiece(Cell cell, Set<Cell> pieces) {
-    int cellX = cell.getXCoOrdinate();
-    int cellY = cell.getYCoOrdinate();
-    for (Cell piece : pieces) {
-      if (piece.getX() + 1 == cellX && piece.getY() + 1 == cellY) return true; // top right diag
-      if (piece.getX() - 1 == cellX && piece.getY() - 1 == cellY) return true; // bottom left diag
-      if (piece.getX() + 1 == cellX && piece.getY() - 1 == cellY) return true; // bottom right
-      // diag
-      if (piece.getX() - 1 == cellX && piece.getY() + 1 == cellY) return true; // top left diag
-      if (piece.getX() == cellX && (piece.getY() + 1 == cellY || piece.getY() - 1 == cellY))
-        return true; // up or down one
-      if (piece.getY() == cellY && (piece.getX() + 1 == cellX || piece.getX() - 1 == cellX))
-        return true; // left or right one
-    }
-    return false;
-  }
     // IANDRO: "this is nasty, so fix it if it doesn't work"
     private boolean cellIsAdjacentToPiece(Cell cell, Set<Cell> pieces) {
-        int cellX = cell.getX();
-        int cellY = cell.getY();
+        int cellX = cell.getXCoOrdinate();
+        int cellY = cell.getYCoOrdinate();
         for (Cell piece : pieces) {
             if (moveOneCellDiagonalTopRight(piece).equals(cell)) return true;
             if (moveOneCellDiagonalBottomRight(piece).equals(cell)) return true;

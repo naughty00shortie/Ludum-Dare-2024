@@ -2,15 +2,14 @@ package com.mygdx.game;
 
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.mygdx.game.movement.Board;
 import com.mygdx.game.movement.Cell;
-import com.mygdx.game.movement.CoOrdinatePair;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 
 import java.awt.*;
 
@@ -24,11 +23,11 @@ public class ChessBoardRenderer extends ApplicationAdapter {
 
   private final Board board = new Board();
 
+  public boolean renderFriendlySummoningPosition = true;
+
+  public boolean renderEnemySummoningPosition = true;
+
   private ShapeRenderer shapeRenderer;
-
-  public boolean renderFriendlySummoningPosition = false;
-
-  public boolean renderEnemySummoningPosition = false;
 
   private Stage stage;
 
@@ -47,7 +46,7 @@ public class ChessBoardRenderer extends ApplicationAdapter {
 
         Button.ButtonStyle buttonStyle = new Button.ButtonStyle();
         cells[i][j].setStyle(buttonStyle);
-        cells[i][j].setBounds((BOARD_SIZE - i) * OFFSET, (j + 1) * OFFSET , SIZE, SIZE);
+        cells[i][j].setBounds((i + 1) * OFFSET , (j + 1) * OFFSET, SIZE, SIZE);
         buttonStyle.up = whiteDrawable;
       }
     }
@@ -60,11 +59,9 @@ public class ChessBoardRenderer extends ApplicationAdapter {
     for (int i = 0; i < BOARD_SIZE; i++) {
       for (int j = 0; j < BOARD_SIZE; j++) {
         renderSquare(i, j);
-
       }
     }
     shapeRenderer.end();
-
     stage.act();
     stage.draw();
   }
@@ -90,11 +87,13 @@ public class ChessBoardRenderer extends ApplicationAdapter {
       } else {
         setEnemySummoningPositionBlack();
       }
-
     }
-
     Rectangle rect = board.getCells()[i][j].getRectangle();
     shapeRenderer.rect(rect.x + 100, rect.y + 100, rect.width, rect.height);
+    if (board.getCells()[i][j].isSelected) {
+      shapeRenderer.setColor(0, 0.99f, 0.98f, 0.1f);
+      shapeRenderer.circle(rect.x + 150, rect.y + 150, rect.width / 4);
+    }
   }
 
 

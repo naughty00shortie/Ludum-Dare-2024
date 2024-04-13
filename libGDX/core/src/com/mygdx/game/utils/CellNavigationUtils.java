@@ -38,50 +38,50 @@ public class CellNavigationUtils {
     }
 
     public static Cell moveOneCellUp(Cell cell) {
-        int x = cell.getX();
-        int y = cell.getY();
+        int x = cell.getXCoOrdinate();
+        int y = cell.getYCoOrdinate();
         return new Cell(x, y + 1, cell.getRectangle());
     }
 
     public static Cell moveOneCellDown(Cell cell) {
-        int x = cell.getX();
-        int y = cell.getY();
+        int x = cell.getXCoOrdinate();
+        int y = cell.getYCoOrdinate();
         return new Cell(x, y - 1, cell.getRectangle());
     }
 
     public static Cell moveOneCellLeft(Cell cell) {
-        int x = cell.getX();
-        int y = cell.getY();
+        int x = cell.getXCoOrdinate();
+        int y = cell.getYCoOrdinate();
         return new Cell(x - 1, y, cell.getRectangle());
     }
 
     public static Cell moveOneCellRight(Cell cell) {
-        int x = cell.getX();
-        int y = cell.getY();
+        int x = cell.getXCoOrdinate();
+        int y = cell.getYCoOrdinate();
         return new Cell(x + 1, y, cell.getRectangle());
     }
 
     public static Cell moveOneCellDiagonalTopLeft(Cell cell) {
-        int x = cell.getX();
-        int y = cell.getY();
+        int x = cell.getXCoOrdinate();
+        int y = cell.getYCoOrdinate();
         return new Cell(x - 1, y + 1, cell.getRectangle());
     }
 
     public static Cell moveOneCellDiagonalBottomLeft(Cell cell) {
-        int x = cell.getX();
-        int y = cell.getY();
+        int x = cell.getXCoOrdinate();
+        int y = cell.getYCoOrdinate();
         return new Cell(x - 1, y - 1, cell.getRectangle());
     }
 
     public static Cell moveOneCellDiagonalBottomRight(Cell cell) {
-        int x = cell.getX();
-        int y = cell.getY();
+        int x = cell.getXCoOrdinate();
+        int y = cell.getYCoOrdinate();
         return new Cell(x + 1, y - 1, cell.getRectangle());
     }
 
     public static Cell moveOneCellDiagonalTopRight(Cell cell) {
-        int x = cell.getX();
-        int y = cell.getY();
+        int x = cell.getXCoOrdinate();
+        int y = cell.getYCoOrdinate();
         return new Cell(x + 1, y + 1, cell.getRectangle());
     }
 

@@ -43,6 +43,10 @@ public class Castle implements Piece {
       }
       possibleMoves.add(coOrdinatePair);
     }
+    Cell nextRight = CellNavigationUtils.moveOneCellRight(origin);
+//    CoOrdinatePair o = new CoOrdinatePair(xOrigin, yOrigin);
+    if (!nextRight.isOccupied()) { //todo out of bounds check
+      possibleMoves.add(new CoOrdinatePair(nextRight.getXCoOrdinate(), nextRight.getYCoOrdinate()));
     for(int i = yOrigin; i >= 0; i--) { // check down
       CoOrdinatePair coOrdinatePair = new CoOrdinatePair(i, yOrigin);
       Cell c = board.getCell(coOrdinatePair).get();

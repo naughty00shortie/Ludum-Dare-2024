@@ -51,7 +51,8 @@ project(":desktop") {
         api "com.badlogicgames.gdx:gdx-freetype-platform:$gdxVersion:natives-desktop"
         api "com.badlogicgames.gdx-controllers:gdx-controllers-desktop:$gdxControllersVersion"
         api "com.badlogicgames.gdx:gdx-box2d-platform:$gdxVersion:natives-desktop"
-
+        testImplementation 'org.junit.jupiter:junit-jupiter-api:5.7.0'
+        testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.7.0'
     }
 }
 
