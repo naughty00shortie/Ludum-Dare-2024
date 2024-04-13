@@ -4,6 +4,7 @@ import com.mygdx.game.movement.Board;
 import com.mygdx.game.movement.Cell;
 import com.mygdx.game.movement.CoOrdinatePair;
 
+import java.util.Optional;
 import java.util.Set;
 
 /**
@@ -30,5 +31,18 @@ public interface Piece {
    */
   default Set<CoOrdinatePair> moveSet(CoOrdinatePair coOrdinatePair, Board board) {
     return moveSet(coOrdinatePair.getX(), coOrdinatePair.getY(), board);
+  }
+
+  /**
+   * A Piece can only occupy empty Cells,
+   * or Cells controlled by Pieces of the opposing faction.
+   *
+   * @param cell to validate movement to.
+   * @return true if the Piece can occupy the Cell.
+   */
+  default boolean canOccupyCell(Cell cell){
+    Optional<Piece> piece = cell.getPiece();
+    if (!piece.isPresent()) return true;
+    return (piece.get().isPlayerPiece() != this.isPlayerPiece());
   }
 }

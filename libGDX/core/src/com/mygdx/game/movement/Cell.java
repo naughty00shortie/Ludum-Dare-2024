@@ -101,6 +101,8 @@ public class Cell extends Button {
     return yCoOrdinate;
   }
 
+
+
   @Override
   public boolean equals(Object o) {
     if (this == o) return true;
@@ -119,5 +121,14 @@ public class Cell extends Button {
 
   public Cell getCell() {
     return this;
+  }
+
+  /**
+   * @return new CoOrdinate pair that would represent this Cell's location on the Board.
+   * @see CoOrdinatePair#equals(Object)
+   * @see Board#getCell(CoOrdinatePair)
+   */
+  public CoOrdinatePair getCoOrdinatePair(){
+    return new CoOrdinatePair(getXCoOrdinate(), getYCoOrdinate());
   }
 }
