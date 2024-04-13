@@ -10,6 +10,13 @@ import java.util.Set;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+/**
+ * Testing of Grunt Piece should be sufficient to cover all other piece
+ * implementations. The primary method being tested is Piece#moveSet which
+ * will filter out the possible moves a Piece can reach.
+ *
+ * @see Piece#moveSet(CoOrdinatePair, Board)
+ */
 class GruntTest {
 
   private Grunt grunt;
