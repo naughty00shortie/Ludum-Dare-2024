@@ -24,4 +24,11 @@ public interface Piece {
    * to determine if it is a capturable move, etc.
    */
   Set<CoOrdinatePair> moveSet(int xOrigin, int yOrigin, Cell[][] cells);
+
+  /**
+   * @see Piece#moveSet(int, int, Cell[][]) delegates.
+   */
+  default Set<CoOrdinatePair> moveSet(CoOrdinatePair coOrdinatePair, Cell[][] cells) {
+    return moveSet(coOrdinatePair.getX(), coOrdinatePair.getY(), cells);
+  }
 }

@@ -16,10 +16,25 @@ public class Board {
 
   public static final int BOARD_SIZE = 8;
 
+  public static final int SIZE = 100;
+
+  public static final int OFFSET = 100;
+
   private Cell[][] cells = new Cell[BOARD_SIZE][BOARD_SIZE];
 
-  private void buildBoard() {
+  public Board() {
+    buildBoardCells();
+  }
 
+  /**
+   * Initialise, or reset, the cells on this board.
+   */
+  private void buildBoardCells() {
+    for (int i = 0; i < BOARD_SIZE; i++) {
+      for (int j = 0; j < BOARD_SIZE; j++) {
+        cells[i][j] = new Cell(i, j, OFFSET, SIZE);
+      }
+    }
   }
 
   public Cell[][] getCells() {
@@ -60,6 +75,7 @@ public class Board {
     }
     return pieces;
   }
+
 
   public Set<Cell> getSummonableCells() {
     Set<Cell> summonablePositions = new HashSet<>();
@@ -113,8 +129,12 @@ public class Board {
   private boolean isInBounds(CoOrdinatePair coOrdinatePair) {
     int x = coOrdinatePair.getX();
     int y = coOrdinatePair.getY();
-    if (x < 0 || x >= BOARD_SIZE) return false;
-    if (y < 0 || y >= BOARD_SIZE) return false;
+    if (x < 0 || x >= BOARD_SIZE) {
+      return false;
+    }
+    if (y < 0 || y >= BOARD_SIZE) {
+      return false;
+    }
     return true;
   }
 
