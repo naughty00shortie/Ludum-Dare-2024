@@ -10,9 +10,19 @@ import java.util.Set;
 
 public class Pawn implements Piece {
 
+  private final boolean playerPiece;
+
+  public Pawn(boolean isPlayerPiece) {
+    this.playerPiece = isPlayerPiece;
+  }
+
+  public Pawn() {
+    this(true);
+  }
+
   @Override
   public boolean isPlayerPiece() {
-    return false;
+    return playerPiece;
   }
 
   @Override
@@ -22,7 +32,7 @@ public class Pawn implements Piece {
     //todo if 1st move can move 2 spaces forward
     //basic movement moves 1 forward "up"
     CoOrdinatePair oneForward = new CoOrdinatePair(xOrigin, yOrigin + 1);
-    if(board.getCell(oneForward).isPresent()){
+    if (board.getCell(oneForward).isPresent()) {
       possibleMoves.add(oneForward);// todo assumed up is positive direction
     }
     //todo check if there are valid capture moves
@@ -30,12 +40,12 @@ public class Pawn implements Piece {
 
     Cell cellLeftDiagonal = board.getCell(new CoOrdinatePair(xOrigin - 1, yOrigin + 1)).orElse(new Cell());
     Cell cellRightDiagonal = board.getCell(new CoOrdinatePair(xOrigin + 1, yOrigin + 1)).orElse(new Cell());
-    //check if theres a piece
+    //check if there's a piece
     if (cellLeftDiagonal.isOccupied()) {
-      possibleMoves.add(CellNavigationUtils.moveOneCellDiagonalTopLeft(origin.getX(),origin.getY()));
+      possibleMoves.add(CellNavigationUtils.moveOneCellDiagonalTopLeft(origin.getX(), origin.getY()));
     }
     if (cellRightDiagonal.isOccupied()) {
-      possibleMoves.add(CellNavigationUtils.moveOneCellDiagonalTopRight(origin.getX(),origin.getY()));
+      possibleMoves.add(CellNavigationUtils.moveOneCellDiagonalTopRight(origin.getX(), origin.getY()));
     }
     return possibleMoves;
   }
