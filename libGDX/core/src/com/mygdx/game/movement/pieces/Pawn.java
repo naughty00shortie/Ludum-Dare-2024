@@ -1,9 +1,10 @@
-package com.mygdx.game.movement;
+package com.mygdx.game.movement.pieces;
 
-import com.mygdx.game.movement.pieces.Piece;
+import com.mygdx.game.movement.Board;
+import com.mygdx.game.movement.Cell;
+import com.mygdx.game.movement.CoOrdinatePair;
 import com.mygdx.game.utils.CellNavigationUtils;
 
-import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
