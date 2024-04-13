@@ -1,11 +1,16 @@
 package com.mygdx.game.movement;
 
+import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.scenes.scene2d.ui.Button;
+
 import com.mygdx.game.movement.pieces.Piece;
 
 import java.awt.*;
 import java.util.Optional;
 
-public class Cell {
+public class Cell extends Button {
 
   private final Rectangle rectangle;
 
@@ -25,6 +30,14 @@ public class Cell {
     this.xCoOrdinate = xCoOrdinate;
     this.yCoOrdinate = yCoOrdinate;
     this.rectangle = new Rectangle(xCoOrdinate * offset, yCoOrdinate * offset, size, size);
+
+    addListener(new ClickListener() {
+      @Override
+      public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+        System.out.println("Cell at " + Cell.this.xCoOrdinate + ", " + Cell.this.yCoOrdinate + " clicked!");
+        return super.touchDown(event, x, y, pointer, button);
+      }
+    });
   }
 
   public Cell(int xCoOrdinate, int yCoOrdinate, Rectangle rect) {
@@ -77,11 +90,11 @@ public class Cell {
     return tempPiece;
   }
 
-  public int getX() {
+  public int getXCoOrdinate() {
     return xCoOrdinate;
   }
 
-  public int getY() {
+  public int getYCoOrdinate() {
     return yCoOrdinate;
   }
 
@@ -101,5 +114,9 @@ public class Cell {
     int result = xCoOrdinate;
     result = 31 * result + yCoOrdinate;
     return result;
+  }
+
+  public Cell getCell() {
+    return this;
   }
 }

@@ -1,9 +1,16 @@
 package com.mygdx.game;
 
 import com.badlogic.gdx.ApplicationAdapter;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.mygdx.game.movement.Board;
 import com.mygdx.game.movement.Cell;
+import com.mygdx.game.movement.CoOrdinatePair;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 
 import java.awt.*;
 
@@ -19,13 +26,32 @@ public class ChessBoardRenderer extends ApplicationAdapter {
 
   private ShapeRenderer shapeRenderer;
 
-  private final boolean renderFriendlySummoningPosition = false;
+  public boolean renderFriendlySummoningPosition = false;
 
-  private final boolean renderEnemySummoningPosition = false;
+  public boolean renderEnemySummoningPosition = false;
+
+  private Stage stage;
 
   @Override
   public void create() {
+    stage = new Stage();
+    Gdx.input.setInputProcessor(stage);
     shapeRenderer = new ShapeRenderer();
+    Texture whiteTexture = new Texture(Gdx.files.internal("WHITE.png"));
+    TextureRegionDrawable whiteDrawable = new TextureRegionDrawable(new TextureRegion(whiteTexture));
+    Cell[][] cells = new Cell[BOARD_SIZE][BOARD_SIZE];
+    for (int i = 0; i < BOARD_SIZE; i++) {
+      for (int j = 0; j < BOARD_SIZE; j++) {
+        cells[i][j] = new Cell(i, j, OFFSET, SIZE);
+        stage.addActor(cells[i][j]);
+
+        Button.ButtonStyle buttonStyle = new Button.ButtonStyle();
+        cells[i][j].setStyle(buttonStyle);
+        cells[i][j].setBounds((BOARD_SIZE - i) * OFFSET, (j + 1) * OFFSET , SIZE, SIZE);
+        buttonStyle.up = whiteDrawable;
+      }
+    }
+    board.setCells(cells);
   }
 
   @Override
@@ -33,23 +59,44 @@ public class ChessBoardRenderer extends ApplicationAdapter {
     shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
     for (int i = 0; i < BOARD_SIZE; i++) {
       for (int j = 0; j < BOARD_SIZE; j++) {
-        if ((i + j) % 2 == 0) {//if block for white squares
-          shapeRenderer.setColor(1, 1, 1, 1);
-          if (j == 0) //white squares in the first row
-            setFriendlySummoningPositionLight();
-          if (j == BOARD_SIZE - 1) //white squares in the last row
-            setEnemySummoningPositionWhite();
-        } else {//Else block for black squares
-          setSummoningPositionBlack();
-          if (j == 0) setFriendlySummoningPositionBlack();//black squares in the first row
-          if (j == BOARD_SIZE - 1) setEnemySummoningPositionBlack();//black squares in the last row
-        }
-        Rectangle rect = board.getCells()[i][j].getRectangle();
-        shapeRenderer.rect(rect.x + 100, rect.y + 100, rect.width, rect.height);
+        renderSquare(i, j);
+
       }
     }
     shapeRenderer.end();
+
+    stage.act();
+    stage.draw();
   }
+
+  private void renderSquare(int i, int j) {
+    boolean isWhiteSquare = (i + j) % 2 == 0;
+    if (isWhiteSquare) {
+      shapeRenderer.setColor(1, 1, 1, 1);
+    } else {
+      setSummoningPositionBlack();
+    }
+
+    if (j == 0 && renderFriendlySummoningPosition) {
+      if (isWhiteSquare) {
+        setFriendlySummoningPositionLight();
+      } else {
+        setFriendlySummoningPositionBlack();
+      }
+    }
+    if (j == BOARD_SIZE - 1 && renderEnemySummoningPosition) {
+      if (isWhiteSquare) {
+        setEnemySummoningPositionWhite();
+      } else {
+        setEnemySummoningPositionBlack();
+      }
+
+    }
+
+    Rectangle rect = board.getCells()[i][j].getRectangle();
+    shapeRenderer.rect(rect.x + 100, rect.y + 100, rect.width, rect.height);
+  }
+
 
   private void setEnemySummoningPositionBlack() {
     shapeRenderer.setColor(0.5f, 0.1f, 0.1f, 1);

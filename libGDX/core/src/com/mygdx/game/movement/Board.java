@@ -1,5 +1,10 @@
 package com.mygdx.game.movement;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.utils.viewport.ScreenViewport;
+
 import com.mygdx.game.movement.pieces.Piece;
 
 import java.util.HashSet;
@@ -22,6 +27,13 @@ public class Board {
 
   private Cell[][] cells = new Cell[BOARD_SIZE][BOARD_SIZE];
 
+
+
+  public Board() {
+
+  }
+
+  private void buildBoard() {
   public Board() {
     buildBoardCells();
   }
@@ -83,6 +95,8 @@ public class Board {
     for (int i = 0; i < cells.length; i++) {
       for (int j = 0; j < cells[i].length; j++) {
         Cell cell = cells[i][j];
+        if (! cell.isOccupied() && cellIsAdjacentToPiece(cell, pieces)) summonablePositions.add(cell);
+        if (j == 0) summonablePositions.add(cell);
         if (!cell.isOccupied() && cellIsAdjacentToPiece(cell, pieces)) {
           summonablePositions.add(cell);
         }
@@ -94,6 +108,23 @@ public class Board {
     return summonablePositions;
   }
 
+  // IANDRO: "this is nasty, so fix it if it doesn't work"
+  private boolean cellIsAdjacentToPiece(Cell cell, Set<Cell> pieces) {
+    int cellX = cell.getXCoOrdinate();
+    int cellY = cell.getYCoOrdinate();
+    for (Cell piece : pieces) {
+      if (piece.getX() + 1 == cellX && piece.getY() + 1 == cellY) return true; // top right diag
+      if (piece.getX() - 1 == cellX && piece.getY() - 1 == cellY) return true; // bottom left diag
+      if (piece.getX() + 1 == cellX && piece.getY() - 1 == cellY) return true; // bottom right
+      // diag
+      if (piece.getX() - 1 == cellX && piece.getY() + 1 == cellY) return true; // top left diag
+      if (piece.getX() == cellX && (piece.getY() + 1 == cellY || piece.getY() - 1 == cellY))
+        return true; // up or down one
+      if (piece.getY() == cellY && (piece.getX() + 1 == cellX || piece.getX() - 1 == cellX))
+        return true; // left or right one
+    }
+    return false;
+  }
     // IANDRO: "this is nasty, so fix it if it doesn't work"
     private boolean cellIsAdjacentToPiece(Cell cell, Set<Cell> pieces) {
         int cellX = cell.getX();
