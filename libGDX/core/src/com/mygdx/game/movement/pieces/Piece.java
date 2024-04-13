@@ -1,4 +1,8 @@
-package com.mygdx.game.movement;
+package com.mygdx.game.movement.pieces;
+
+import com.mygdx.game.movement.Board;
+import com.mygdx.game.movement.Cell;
+import com.mygdx.game.movement.CoOrdinatePair;
 
 import java.util.Set;
 
@@ -6,7 +10,9 @@ import java.util.Set;
  * Candace: Provide a concrete implementation for Piece.
  */
 public interface Piece {
-
+  /**
+   * @return true if your piece. false if enemy piece
+   */
   boolean isPlayerPiece();
 
   /**
@@ -17,6 +23,12 @@ public interface Piece {
    * @see Cell#isOccupied() might be queried along with Cell#getPiece() -> Piece#isPlayerPiece
    * to determine if it is a capturable move, etc.
    */
-  Set<CoOrdinatePair> moveSet(int xOrigin, int yOrigin);
+  Set<CoOrdinatePair> moveSet(int xOrigin, int yOrigin, Board board);
 
+  /**
+   * @see Piece#moveSet(int, int, Board) delegates.
+   */
+  default Set<CoOrdinatePair> moveSet(CoOrdinatePair coOrdinatePair, Board board) {
+    return moveSet(coOrdinatePair.getX(), coOrdinatePair.getY(), board);
+  }
 }

@@ -23,17 +23,9 @@ public class ChessBoardRenderer extends ApplicationAdapter {
 
   private final boolean renderEnemySummoningPosition = false;
 
-
   @Override
   public void create() {
     shapeRenderer = new ShapeRenderer();
-    Cell[][] cells = new Cell[BOARD_SIZE][BOARD_SIZE];
-    for (int i = 0; i < BOARD_SIZE; i++) {
-      for (int j = 0; j < BOARD_SIZE; j++) {
-        cells[i][j] = new Cell(i, j, OFFSET, SIZE);
-      }
-    }
-    board.setCells(cells);
   }
 
   @Override

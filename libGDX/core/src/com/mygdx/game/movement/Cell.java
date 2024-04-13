@@ -1,5 +1,7 @@
 package com.mygdx.game.movement;
 
+import com.mygdx.game.movement.pieces.Piece;
+
 import java.awt.*;
 import java.util.Optional;
 
@@ -12,6 +14,12 @@ public class Cell {
   private final int yCoOrdinate;
 
   private Piece piece;
+
+  public Cell() {
+    rectangle = null;
+    xCoOrdinate = -1;
+    yCoOrdinate = -1;
+  }
 
   public Cell(int xCoOrdinate, int yCoOrdinate, int offset, int size) {
     this.xCoOrdinate = xCoOrdinate;
