@@ -12,10 +12,25 @@ public class Board {
 
   public static final int BOARD_SIZE = 8;
 
+  public static final int SIZE = 100;
+
+  public static final int OFFSET = 100;
+
   private Cell[][] cells = new Cell[BOARD_SIZE][BOARD_SIZE];
 
-  private void buildBoard() {
+  public Board() {
+    buildBoardCells();
+  }
 
+  /**
+   * Initialise, or reset, the cells on this board.
+   */
+  private void buildBoardCells() {
+    for (int i = 0; i < BOARD_SIZE; i++) {
+      for (int j = 0; j < BOARD_SIZE; j++) {
+        cells[i][j] = new Cell(i, j, OFFSET, SIZE);
+      }
+    }
   }
 
   public Cell[][] getCells() {
@@ -28,7 +43,7 @@ public class Board {
 
   public Set<CoOrdinatePair> getValidMoves(int x, int y) {
     Piece p = cells[x][y].getPiece().orElseThrow(() -> new RuntimeException());
-    return p.moveSet(x, y);
+    return p.moveSet(x, y, cells);
   }
 
   public void movePiece(Piece piece, int oldX, int oldY, int newX, int newY) {
