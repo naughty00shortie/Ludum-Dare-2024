@@ -13,21 +13,23 @@ import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.math.Vector3;
 
 import java.awt.*;
 
 public class MenuSummonScreen extends ApplicationAdapter {
 
 
-  public static final int BUTTON_WIDTH = 100;
+  public static final int BUTTON_WIDTH = 300;
 
-  public static final int BUTTON_HEIGHT = 100;
+  public static final int BUTTON_HEIGHT = 200;
 
   public static final int BUTTON_PADDING = 10;
 
-  public static final int POSX = 500;
+  public static final int POS_X = 1200;
 
-  public static final int POSY = 500;
+  public static final int POS_Y = 300;
 
   private Stage stage;
 
@@ -43,14 +45,18 @@ public class MenuSummonScreen extends ApplicationAdapter {
 
   private ShapeRenderer shapeRenderer;
 
+  private OrthographicCamera camera;
+
   @Override
   public void create() {
     batch = new SpriteBatch();
     stage = new Stage();
     Gdx.input.setInputProcessor(stage);
+    camera = new OrthographicCamera();
+    camera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 
     skins = new Skin[6];
-    // Generate a 1x1 white texture and store it in the skin named "white".
+
     Pixmap pixmap = new Pixmap(1, 1, Pixmap.Format.RGBA8888);
     pixmap.setColor(Color.WHITE);
     pixmap.fill();
@@ -58,7 +64,7 @@ public class MenuSummonScreen extends ApplicationAdapter {
       skins[i] = new Skin();
     }
 
-    skins[0].add("pawn", new Texture(Gdx.files.internal("png/pawn_white.png")));
+    skins[0].add("pawn", new Texture(Gdx.files.internal("hopper_forward.png")));
     skins[1].add("knight", new Texture(Gdx.files.internal("png/knight_white.png")));
     skins[2].add("bishop", new Texture(Gdx.files.internal("png/bishop_white.png")));
     skins[3].add("rook", new Texture(Gdx.files.internal("png/rook_white.png")));
@@ -66,13 +72,9 @@ public class MenuSummonScreen extends ApplicationAdapter {
     skins[5].add("king", new Texture(Gdx.files.internal("png/king_white.png")));
 
 
-    //Store the default libGDX font under the name "default".
-
-    // Configure a ImageButtonStyle and name it "default". Skin resources are stored by type, so this doesn't overwrite the font.
     ImageButton.ImageButtonStyle[] ImageButtonStyles = new ImageButton.ImageButtonStyle[6];
 
 
-    // Create a table that fills the screen. Everything else will go inside this table.
     Table table = new Table();
     table.setFillParent(true);
     stage.addActor(table);
@@ -84,6 +86,7 @@ public class MenuSummonScreen extends ApplicationAdapter {
       ImageButtonStyles[i].down = skins[i].newDrawable(skinNames[i], new Color(1f, 0, 0, 1));
       ImageButtonStyles[i].checked = skins[i].newDrawable(skinNames[i], new Color(0.1f, 0.8f, 1, 1));
       ImageButtonStyles[i].over = skins[i].newDrawable(skinNames[i], Color.DARK_GRAY);
+
       skins[i].add(skinNames[i], ImageButtonStyles[i]);
       buttons[i] = new ImageButton(skins[i].getDrawable(skinNames[i]));
       buttons[i].setStyle(ImageButtonStyles[i]);
@@ -91,16 +94,20 @@ public class MenuSummonScreen extends ApplicationAdapter {
 
       int finalI = i;
       buttons[i].addListener(new ChangeListener() {
-
         public void changed(ChangeEvent event, Actor actor) {
           System.out.println("Clicked! Is checked:  " + finalI + " " + buttons[finalI].isChecked());
         }
       });
+
     }
 
+
     shapeRenderer = new ShapeRenderer();
-    background = new Rectangle(POSX, POSY, 2 * (BUTTON_WIDTH + BUTTON_PADDING), 2 * (BUTTON_HEIGHT + BUTTON_PADDING));
-    table.setPosition(background.x, background.y);
+    background = new Rectangle(POS_X, POS_Y, 2 * (BUTTON_WIDTH + BUTTON_PADDING), 2 * (BUTTON_HEIGHT + BUTTON_PADDING));    Vector3 touchPos = new Vector3();
+    touchPos.set(POS_X-650,   Gdx.graphics.getHeight() - POS_Y +450+ background.y-background.height, 0);
+    camera.unproject(touchPos);
+    table.setPosition(touchPos.x, touchPos.y);
+
   }
 
   @Override
@@ -110,7 +117,6 @@ public class MenuSummonScreen extends ApplicationAdapter {
     shapeRenderer.setColor(0, 1, 1, 1);
     shapeRenderer.rect(background.x, background.y, background.width, background.height);
     shapeRenderer.end();
-    stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
     stage.draw();
   }
 
