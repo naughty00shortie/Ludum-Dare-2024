@@ -4,7 +4,7 @@ import com.mygdx.game.movement.pieces.Pawn;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 
@@ -22,12 +22,46 @@ class PawnTest {
     board = new Board();
   }
 
+  /**
+   * Player pawns can only move forward on rank, if there are no enemy pawns to capture.
+   */
   @Test
-  void moveFromOrigin_0_0() {
+  void movesFromBottomLeft() {
     CoOrdinatePair origin = new CoOrdinatePair(0, 0);
-    List<CoOrdinatePair> expectedMoveSet = Arrays.asList(new CoOrdinatePair(1, -1), new CoOrdinatePair(1, 0), new CoOrdinatePair(1, 1));
+    List<CoOrdinatePair> expectedMoveSet = Collections.singletonList(new CoOrdinatePair(0, 1));
     Set<CoOrdinatePair> actualMoveSet = pawn.moveSet(origin, board);
     assertTrue(expectedMoveSet.containsAll(actualMoveSet));
-
   }
+
+  /**
+   * Player pawns can only move forward on rank, if there are no enemy pawns to capture.
+   */
+  @Test
+  void movesFromBottomRight() {
+    CoOrdinatePair origin = new CoOrdinatePair(7, 0);
+    List<CoOrdinatePair> expectedMoveSet = Collections.singletonList(new CoOrdinatePair(7, 1));
+    Set<CoOrdinatePair> actualMoveSet = pawn.moveSet(origin, board);
+    assertTrue(expectedMoveSet.containsAll(actualMoveSet));
+  }
+
+  /**
+   * Player pawns can't move past their final rank (enemy home rank).
+   */
+  @Test
+  void movesFromTopLeft() {
+    CoOrdinatePair origin = new CoOrdinatePair(0, 7);
+    Set<CoOrdinatePair> actualMoveSet = pawn.moveSet(origin, board);
+    assertTrue(actualMoveSet.isEmpty());
+  }
+
+  /**
+   * Player pawns can't move past their final rank (enemy home rank).
+   */
+  @Test
+  void movesFromTopRight() {
+    CoOrdinatePair origin = new CoOrdinatePair(7, 7);
+    Set<CoOrdinatePair> actualMoveSet = pawn.moveSet(origin, board);
+    assertTrue(actualMoveSet.isEmpty());
+  }
+
 }

@@ -26,7 +26,7 @@ public interface Piece {
   Set<CoOrdinatePair> moveSet(int xOrigin, int yOrigin, Board board);
 
   /**
-   * @see Piece#moveSet(int, int, Cell[][]) delegates.
+   * @see Piece#moveSet(int, int, Board) delegates.
    */
   default Set<CoOrdinatePair> moveSet(CoOrdinatePair coOrdinatePair, Board board) {
     return moveSet(coOrdinatePair.getX(), coOrdinatePair.getY(), board);

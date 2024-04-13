@@ -22,7 +22,9 @@ public class Pawn implements Piece {
     //todo if 1st move can move 2 spaces forward
     //basic movement moves 1 forward "up"
     CoOrdinatePair oneForward = new CoOrdinatePair(xOrigin, yOrigin + 1);
-    possibleMoves.add(oneForward);// todo assumed up is positive direction
+    if(board.getCell(oneForward).isPresent()){
+      possibleMoves.add(oneForward);// todo assumed up is positive direction
+    }
     //todo check if there are valid capture moves
     //get diagonal cells
 
