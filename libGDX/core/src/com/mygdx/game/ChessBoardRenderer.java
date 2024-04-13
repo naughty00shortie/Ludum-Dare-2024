@@ -2,37 +2,38 @@ package com.mygdx.game;
 
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.mygdx.game.movement.Board;
 import com.mygdx.game.movement.Cell;
 
 import java.awt.*;
 
-public class ChessBoard extends ApplicationAdapter {
+public class ChessBoardRenderer extends ApplicationAdapter {
 
   public static final int BOARD_SIZE = 8;
 
   public static final int SIZE = 100;
 
-  public static final int X_OFFSET = 100;
+  public static final int OFFSET = 100;
 
-  public static final int Y_OFFSET = 100;
-
-  private final Cell[][] board = new Cell[BOARD_SIZE][BOARD_SIZE];
+  private final Board board = new Board();
 
   private ShapeRenderer shapeRenderer;
 
-  private boolean renderFriendlySummoningPosition = false;
+  private final boolean renderFriendlySummoningPosition = false;
 
-  private boolean renderEnemySummoningPosition = false;
+  private final boolean renderEnemySummoningPosition = false;
 
 
   @Override
   public void create() {
     shapeRenderer = new ShapeRenderer();
+    Cell[][] cells = new Cell[BOARD_SIZE][BOARD_SIZE];
     for (int i = 0; i < BOARD_SIZE; i++) {
       for (int j = 0; j < BOARD_SIZE; j++) {
-        board[i][j] = new Cell(i * X_OFFSET, j * Y_OFFSET, SIZE);
+        cells[i][j] = new Cell(i, j, OFFSET, SIZE);
       }
     }
+    board.setCells(cells);
   }
 
   @Override
@@ -51,7 +52,7 @@ public class ChessBoard extends ApplicationAdapter {
           if (j == 0) setFriendlySummoningPositionBlack();//black squares in the first row
           if (j == BOARD_SIZE - 1) setEnemySummoningPositionBlack();//black squares in the last row
         }
-        Rectangle rect = board[i][j].getRectangle();
+        Rectangle rect = board.getCells()[i][j].getRectangle();
         shapeRenderer.rect(rect.x + 100, rect.y + 100, rect.width, rect.height);
       }
     }
