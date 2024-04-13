@@ -6,21 +6,40 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
+import java.awt.*;
+
 public class PlayMenuScreen extends ApplicationAdapter {
+
   private Stage stage;
+
   private OrthographicCamera camera;
+
   private SpriteBatch batch;
+
   private BitmapFont font;
+
   private Skin skin;
 
+  private Rectangle background;
+
+  private ShapeRenderer shapeRenderer;
+
+  private int x = 0;
+
+  private int y = 0;
+
   @Override
+
   public void create() {
+    shapeRenderer = new ShapeRenderer();
+    background = new Rectangle((Gdx.graphics.getWidth() / 4) + 800 , Gdx.graphics.getHeight() / 4, Gdx.graphics.getWidth() / 5, Gdx.graphics.getHeight() / 2);
     batch = new SpriteBatch();
     font = new BitmapFont();
 
@@ -31,8 +50,8 @@ public class PlayMenuScreen extends ApplicationAdapter {
     Gdx.input.setInputProcessor(stage);
 
     skin = new Skin();
-    skin.add("buttonUp", new Texture("badlogic.jpg"));
-    skin.add("buttonDown", new Texture("badlogic.jpg"));
+    skin.add("buttonUp", new Texture("png/button_blank.png"));
+    skin.add("buttonDown", new Texture("png/button_blank.png"));
     TextButton.TextButtonStyle textButtonStyle = new TextButton.TextButtonStyle();
     textButtonStyle.up = skin.getDrawable("buttonUp");
     textButtonStyle.down = skin.getDrawable("buttonDown");
@@ -42,10 +61,21 @@ public class PlayMenuScreen extends ApplicationAdapter {
     TextButton moveButton = new TextButton("Move", textButtonStyle);
     TextButton summonButton = new TextButton("Summon", textButtonStyle);
 
-    moveButton.setPosition(Gdx.graphics.getWidth() / 2 - moveButton.getWidth() / 2,
-            Gdx.graphics.getHeight() / 2 + 50);
-    summonButton.setPosition(Gdx.graphics.getWidth() / 2 - summonButton.getWidth() / 2,
-            Gdx.graphics.getHeight() / 2 - summonButton.getHeight() - 50);
+    float buttonSpacing = 20;
+    float buttonWidth = 150;
+    float buttonHeight = 75;
+    moveButton.setSize(buttonWidth, buttonHeight);
+    summonButton.setSize(buttonWidth, buttonHeight);
+
+    float fontScale = 1.5f;
+    font.getData().setScale(fontScale);
+
+
+    moveButton.setPosition(background.x + background.width / 2 - moveButton.getWidth() / 2,
+            background.y + background.height / 2 + buttonSpacing / 2);
+    summonButton.setPosition(background.x + background.width / 2 - summonButton.getWidth() / 2,
+            background.y + background.height / 2 - summonButton.getHeight() - buttonSpacing / 2);
+
 
     moveButton.addListener(new ClickListener() {
       @Override
@@ -71,7 +101,10 @@ public class PlayMenuScreen extends ApplicationAdapter {
   public void render() {
     camera.update();
     batch.setProjectionMatrix(camera.combined);
-
+    shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
+    shapeRenderer.setColor(0, 1, 1, 1);
+    shapeRenderer.rect(background.x, background.y, background.width, background.height);
+    shapeRenderer.end();
     batch.begin();
     stage.draw();
     batch.end();
