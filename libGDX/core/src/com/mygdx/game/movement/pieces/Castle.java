@@ -26,23 +26,38 @@ public class Castle implements Piece {
   @Override
   public Set<CoOrdinatePair> moveSet(int xOrigin, int yOrigin, Board board) {
     Set<CoOrdinatePair> possibleMoves = new HashSet<>();
-    //todo perhaps add direction abstractions
-    //todo add all co-ordinates to the right until we hit an obstacle
-    //x +
-    Cell origin = board.getCell(new CoOrdinatePair(xOrigin, yOrigin)).orElseThrow(() -> new RuntimeException("X or Y origin out of bounds"));
     int boardSize = board.getCells().length;
     for(int i = xOrigin; i < boardSize; i++) { // check right
       CoOrdinatePair coOrdinatePair = new CoOrdinatePair(i, yOrigin);
       Cell c = board.getCell(coOrdinatePair).get();
-      if(c.isOccupied()) {
+      if(c.isOccupied()) { // TODO check if enemy piece
         break;
       }
       possibleMoves.add(coOrdinatePair);
     }
-    Cell nextRight = CellNavigationUtils.moveOneCellRight(origin);
-//    CoOrdinatePair o = new CoOrdinatePair(xOrigin, yOrigin);
-    if (!nextRight.isOccupied()) { //todo out of bounds check
-      possibleMoves.add(new CoOrdinatePair(nextRight.getX(), nextRight.getY()));
+    for(int i = xOrigin; i >= 0; i--) { // check left
+      CoOrdinatePair coOrdinatePair = new CoOrdinatePair(i, yOrigin);
+      Cell c = board.getCell(coOrdinatePair).get();
+      if(c.isOccupied()) { // TODO check if enemy piece
+        break;
+      }
+      possibleMoves.add(coOrdinatePair);
+    }
+    for(int i = yOrigin; i >= 0; i--) { // check down
+      CoOrdinatePair coOrdinatePair = new CoOrdinatePair(i, yOrigin);
+      Cell c = board.getCell(coOrdinatePair).get();
+      if(c.isOccupied()) { // TODO check if enemy piece
+        break;
+      }
+      possibleMoves.add(coOrdinatePair);
+    }
+    for(int i = yOrigin; i < boardSize; i++) { // check up
+      CoOrdinatePair coOrdinatePair = new CoOrdinatePair(xOrigin, i);
+      Cell c = board.getCell(coOrdinatePair).get();
+      if(c.isOccupied()) { // TODO check if enemy piece
+        break;
+      }
+      possibleMoves.add(coOrdinatePair);
     }
     return possibleMoves;
   }
