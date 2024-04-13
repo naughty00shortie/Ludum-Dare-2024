@@ -2,6 +2,7 @@ package com.mygdx.game.movement.pieces;
 
 import com.mygdx.game.movement.Board;
 import com.mygdx.game.movement.CoOrdinatePair;
+import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import java.util.Set;
 
@@ -21,6 +22,6 @@ public class Knight implements Piece{
   }
 
   private CoOrdinatePair applyL(CoOrdinatePair origin) {
-
+    throw new NotImplementedException();
   }
 }
