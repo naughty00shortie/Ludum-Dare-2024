@@ -34,4 +34,22 @@ public class CoOrdinatePair {
     result = 31 * result + y;
     return result;
   }
+
+  // Fluency // Convenience
+
+  public CoOrdinatePair up() {
+    return new CoOrdinatePair(x, y + 1);
+  }
+
+  public CoOrdinatePair down() {
+    return new CoOrdinatePair(x, y - 1);
+  }
+
+  public CoOrdinatePair left() {
+    return new CoOrdinatePair(x - 1, y);
+  }
+
+  public CoOrdinatePair right() {
+    return new CoOrdinatePair(x + 1, y);
+  }
 }

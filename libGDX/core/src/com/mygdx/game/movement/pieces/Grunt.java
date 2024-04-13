@@ -30,15 +30,12 @@ public class Grunt implements Piece {
    * Enemy Pieces move down the Board, decreasing in Y.
    */
   @Override
-  public Set<CoOrdinatePair> potentialMoveSet(int xOrigin, int yOrigin) {
-    int yStep = (isPlayerPiece()) ? yOrigin + 1 : yOrigin - 1;
+  public Set<CoOrdinatePair> potentialMoveSet(CoOrdinatePair origin) {
+    CoOrdinatePair step = (isPlayerPiece()) ? origin.up() : origin.down();
     Set<CoOrdinatePair> moveSet = new HashSet<>();
-    CoOrdinatePair forward = new CoOrdinatePair(xOrigin, yStep);
-    CoOrdinatePair left = new CoOrdinatePair(xOrigin + 1, yStep);
-    CoOrdinatePair right = new CoOrdinatePair(xOrigin - 1, yStep);
-    moveSet.add(forward);
-    moveSet.add(left);
-    moveSet.add(right);
+    moveSet.add(step);
+    moveSet.add(step.left());
+    moveSet.add(step.right());
     return moveSet;
   }
 

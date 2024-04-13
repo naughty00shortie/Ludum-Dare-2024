@@ -27,22 +27,14 @@ public interface Piece {
    */
   default boolean canOccupyCell(Cell cell) {
     Optional<Piece> piece = cell.getPiece();
-    if (!piece.isPresent()) return true;
-    return (piece.get().isPlayerPiece() != this.isPlayerPiece());
-  }
-
-  /**
-   * @see Piece#moveSet(int, int, Board) delegates.
-   */
-  default Set<CoOrdinatePair> moveSet(CoOrdinatePair coOrdinatePair, Board board) {
-    return moveSet(coOrdinatePair.getX(), coOrdinatePair.getY(), board);
+    return piece.map(value -> (value.isPlayerPiece() != this.isPlayerPiece())).orElse(true);
   }
 
   /**
    * @return Set of CoOrdinates this Piece has valid moves on.
    */
-  default Set<CoOrdinatePair> moveSet(int xOrigin, int yOrigin, Board board) {
-    return potentialMoveSet(xOrigin, yOrigin).stream()
+  default Set<CoOrdinatePair> moveSet(CoOrdinatePair coOrdinatePair, Board board) {
+    return potentialMoveSet(coOrdinatePair).stream()
             .map(board::getCell)
             .filter(Optional::isPresent)
             .map(Optional::get)
@@ -54,8 +46,8 @@ public interface Piece {
   /**
    * @return Set of all possible CoOrdinates this Piece could move to. These CoOrdinates do not
    * have to be valid, and are meant to be filtered.
-   * @see Piece#moveSet(int, int, Board)
+   * @see Piece#moveSet(CoOrdinatePair, Board)
    */
-  Set<CoOrdinatePair> potentialMoveSet(int xOrigin, int yOrigin);
+  Set<CoOrdinatePair> potentialMoveSet(CoOrdinatePair origin);
 
 }
