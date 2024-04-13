@@ -23,12 +23,12 @@ public interface Piece {
    * @see Cell#isOccupied() might be queried along with Cell#getPiece() -> Piece#isPlayerPiece
    * to determine if it is a capturable move, etc.
    */
-  Set<CoOrdinatePair> moveSet(int xOrigin, int yOrigin, Cell[][] cells);
+  Set<CoOrdinatePair> moveSet(int xOrigin, int yOrigin, Board board);
 
   /**
    * @see Piece#moveSet(int, int, Cell[][]) delegates.
    */
-  default Set<CoOrdinatePair> moveSet(CoOrdinatePair coOrdinatePair, Cell[][] cells) {
-    return moveSet(coOrdinatePair.getX(), coOrdinatePair.getY(), cells);
+  default Set<CoOrdinatePair> moveSet(CoOrdinatePair coOrdinatePair, Board board) {
+    return moveSet(coOrdinatePair.getX(), coOrdinatePair.getY(), board);
   }
 }
