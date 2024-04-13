@@ -56,6 +56,36 @@ public class Board {
   }
 
 
+  public Set<Cell> getSummonableCells() {
+    Set<Cell> summonablePositions = new HashSet<>();
+    Set<Cell> pieces = getCellsWithPieces();
+    for (int i = 0; i < cells.length; i++) {
+      for (int j = 0; j < cells[i].length; j++) {
+        Cell cell = cells[i][j];
+        if (!cell.isOccupied() && cellIsAdjacentToPiece(cell, pieces)) summonablePositions.add(cell);
+        if(j == 0) summonablePositions.add(cell);
+      }
+    }
+    return summonablePositions;
+  }
+
+  // IANDRO: "this is nasty, so fix it if it doesn't work"
+  private boolean cellIsAdjacentToPiece(Cell cell, Set<Cell> pieces) {
+    int cellX = cell.getX();
+    int cellY = cell.getY();
+    for (Cell piece : pieces) {
+      if (piece.getX() + 1 == cellX && piece.getY() + 1 == cellY) return true; // top right diag
+      if (piece.getX() - 1 == cellX && piece.getY() - 1 == cellY) return true; // bottom left diag
+      if (piece.getX() + 1 == cellX && piece.getY() - 1 == cellY) return true; // bottom right
+      // diag
+      if (piece.getX() - 1 == cellX && piece.getY() + 1 == cellY) return true; // top left diag
+      if(piece.getX() == cellX && (piece.getY() + 1 == cellY || piece.getY() - 1 == cellY)) return true; // up or down one
+      if(piece.getY() == cellY && (piece.getX() + 1 == cellX || piece.getX() - 1 == cellX)) return true; // left or right one
+    }
+    return false;
+  }
+
+
   /**
    * Get the Cell at this CoOrdinate
    *
