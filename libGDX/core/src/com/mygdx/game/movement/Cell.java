@@ -15,6 +15,12 @@ public class Cell {
 
   private Piece piece;
 
+  public Cell() {
+    rectangle = null;
+    xCoOrdinate = -1;
+    yCoOrdinate = -1;
+  }
+
   public Cell(int xCoOrdinate, int yCoOrdinate, int offset, int size) {
     this.xCoOrdinate = xCoOrdinate;
     this.yCoOrdinate = yCoOrdinate;

@@ -1,5 +1,6 @@
 package com.mygdx.game.movement;
 
+import com.mygdx.game.movement.pieces.Pawn;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -25,7 +26,7 @@ class PawnTest {
   void moveFromOrigin_0_0() {
     CoOrdinatePair origin = new CoOrdinatePair(0, 0);
     List<CoOrdinatePair> expectedMoveSet = Arrays.asList(new CoOrdinatePair(1, -1), new CoOrdinatePair(1, 0), new CoOrdinatePair(1, 1));
-    Set<CoOrdinatePair> actualMoveSet = pawn.moveSet(origin, board.getCells());
+    Set<CoOrdinatePair> actualMoveSet = pawn.moveSet(origin, board);
     assertTrue(expectedMoveSet.containsAll(actualMoveSet));
 
   }

@@ -46,8 +46,8 @@ public class Board {
   }
 
   public Set<CoOrdinatePair> getValidMoves(int x, int y) {
-    Piece p = cells[x][y].getPiece().orElseThrow(() -> new RuntimeException());
-    return p.moveSet(x, y, cells);
+    Piece p = cells[x][y].getPiece().orElseThrow(() -> new RuntimeException("No piece found"));
+    return p.moveSet(x, y, this);
   }
 
   public void movePiece(Piece piece, int oldX, int oldY, int newX, int newY) {
