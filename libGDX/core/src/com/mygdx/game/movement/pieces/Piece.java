@@ -1,4 +1,8 @@
-package com.mygdx.game.movement;
+package com.mygdx.game.movement.pieces;
+
+import com.mygdx.game.movement.Board;
+import com.mygdx.game.movement.Cell;
+import com.mygdx.game.movement.CoOrdinatePair;
 
 import java.util.Set;
 

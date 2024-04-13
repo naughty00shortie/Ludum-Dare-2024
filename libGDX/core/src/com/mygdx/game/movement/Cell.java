@@ -1,5 +1,7 @@
 package com.mygdx.game.movement;
 
+import com.mygdx.game.movement.pieces.Piece;
+
 import java.awt.*;
 import java.util.Optional;
 
