@@ -9,17 +9,27 @@ public class ChessBoard extends ApplicationAdapter {
 
   public static final int BOARD_SIZE = 8;
 
+  public static final int SIZE = 100;
+
+  public static final int X_OFFSET = 100;
+
+  public static final int Y_OFFSET = 100;
+
+
   private Rectangle[][] board = new Rectangle[BOARD_SIZE][BOARD_SIZE];
 
   private ShapeRenderer shapeRenderer;
 
+  private boolean renderFriendlySummoningPosition = false;
+
+  private boolean renderEnemySummoningPosition = false;
 
   @Override
   public void create() {
     shapeRenderer = new ShapeRenderer();
     for (int i = 0; i < BOARD_SIZE; i++) {
       for (int j = 0; j < BOARD_SIZE; j++) {
-        board[i][j] = new Rectangle(i * 100, j * 100, 100, 100);
+        board[i][j] = new Rectangle(i * X_OFFSET, j * Y_OFFSET, SIZE, SIZE);
       }
     }
   }
