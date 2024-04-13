@@ -81,7 +81,7 @@ public class MenuSummonScreen extends ApplicationAdapter {
     for (int i = 0; i < 6; i++) {
       ImageButtonStyles[i] = new ImageButton.ImageButtonStyle();
       ImageButtonStyles[i].up = skins[i].newDrawable(skinNames[i], Color.WHITE);
-      ImageButtonStyles[i].down = skins[i].newDrawable(skinNames[i], new Color(0.1f, 0.8f, 1, 1));
+      ImageButtonStyles[i].down = skins[i].newDrawable(skinNames[i], new Color(1f, 0, 0, 1));
       ImageButtonStyles[i].checked = skins[i].newDrawable(skinNames[i], new Color(0.1f, 0.8f, 1, 1));
       ImageButtonStyles[i].over = skins[i].newDrawable(skinNames[i], Color.DARK_GRAY);
       skins[i].add(skinNames[i], ImageButtonStyles[i]);
