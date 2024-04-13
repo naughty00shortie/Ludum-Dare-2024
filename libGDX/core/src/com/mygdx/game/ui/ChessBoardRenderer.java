@@ -1,4 +1,4 @@
-package com.mygdx.game;
+package com.mygdx.game.ui;
 
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
@@ -55,6 +55,7 @@ public class ChessBoardRenderer extends ApplicationAdapter {
 
   @Override
   public void render() {
+
     shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
     for (int i = 0; i < BOARD_SIZE; i++) {
       for (int j = 0; j < BOARD_SIZE; j++) {

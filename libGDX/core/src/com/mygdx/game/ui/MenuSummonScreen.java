@@ -33,8 +33,6 @@ public class MenuSummonScreen extends ApplicationAdapter {
 
   private Stage stage;
 
-  private SpriteBatch batch;
-
   private ImageButton[] buttons;
 
   private Skin[] skins;
@@ -49,7 +47,6 @@ public class MenuSummonScreen extends ApplicationAdapter {
 
   @Override
   public void create() {
-    batch = new SpriteBatch();
     stage = new Stage();
     Gdx.input.setInputProcessor(stage);
     camera = new OrthographicCamera();
@@ -107,7 +104,6 @@ public class MenuSummonScreen extends ApplicationAdapter {
     touchPos.set(POS_X-650,   Gdx.graphics.getHeight() - POS_Y +450+ background.y-background.height, 0);
     camera.unproject(touchPos);
     table.setPosition(touchPos.x, touchPos.y);
-
   }
 
   @Override
