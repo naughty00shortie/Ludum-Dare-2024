@@ -1,6 +1,8 @@
 package com.mygdx.game;
 
 import com.badlogic.gdx.ApplicationAdapter;
+import com.mygdx.game.ui.ChessBoardRenderer;
+import com.mygdx.game.ui.ManaUI;
 import com.mygdx.game.ui.MenuSummonScreen;
 
 public class MyGdxGame extends ApplicationAdapter {
@@ -22,7 +24,6 @@ public class MyGdxGame extends ApplicationAdapter {
   public void render() {
 
     //chessBoardRenderer.render();
-//    chessBoardRenderer.render();
     menuScreen.render();
   }
 
