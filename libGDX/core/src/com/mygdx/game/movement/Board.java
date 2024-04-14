@@ -1,10 +1,5 @@
 package com.mygdx.game.movement;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.utils.viewport.ScreenViewport;
-
 import com.mygdx.game.movement.pieces.Piece;
 
 import java.util.HashSet;
@@ -27,12 +22,9 @@ public class Board {
 
   private Cell[][] cells = new Cell[BOARD_SIZE][BOARD_SIZE];
 
-
-
   public Board() {
-
+    buildBoardCells();
   }
-
 
   /**
    * Initialise, or reset, the cells on this board.
@@ -55,7 +47,7 @@ public class Board {
 
   public Set<CoOrdinatePair> getValidMoves(int x, int y) {
     Piece p = cells[x][y].getPiece().orElseThrow(() -> new RuntimeException("No piece found"));
-    return p.moveSet(x, y, this);
+    return p.moveSet(new CoOrdinatePair(x, y), this);
   }
 
   public void movePiece(Piece piece, int oldX, int oldY, int newX, int newY) {
@@ -91,7 +83,7 @@ public class Board {
     for (int i = 0; i < cells.length; i++) {
       for (int j = 0; j < cells[i].length; j++) {
         Cell cell = cells[i][j];
-        if (! cell.isOccupied() && cellIsAdjacentToPiece(cell, pieces)) summonablePositions.add(cell);
+        if (!cell.isOccupied() && cellIsAdjacentToPiece(cell, pieces)) summonablePositions.add(cell);
         if (j == 0) summonablePositions.add(cell);
         if (!cell.isOccupied() && cellIsAdjacentToPiece(cell, pieces)) {
           summonablePositions.add(cell);
@@ -104,22 +96,22 @@ public class Board {
     return summonablePositions;
   }
 
-    // IANDRO: "this is nasty, so fix it if it doesn't work"
-    private boolean cellIsAdjacentToPiece(Cell cell, Set<Cell> pieces) {
-        int cellX = cell.getXCoOrdinate();
-        int cellY = cell.getYCoOrdinate();
-        for (Cell piece : pieces) {
-            if (moveOneCellDiagonalTopRight(piece).equals(cell)) return true;
-            if (moveOneCellDiagonalBottomRight(piece).equals(cell)) return true;
-            if (moveOneCellDiagonalBottomLeft(piece).equals(cell)) return true;
-            if (moveOneCellDiagonalTopLeft(piece).equals(cell)) return true;
-            if (moveOneCellLeft(piece).equals(cell)) return true;
-            if (moveOneCellRight(piece).equals(cell)) return true;
-            if (moveOneCellUp(piece).equals(cell)) return true;
-            if (moveOneCellDown(piece).equals(cell)) return true;
-        }
-        return false;
+  // IANDRO: "this is nasty, so fix it if it doesn't work"
+  private boolean cellIsAdjacentToPiece(Cell cell, Set<Cell> pieces) {
+    int cellX = cell.getXCoOrdinate();
+    int cellY = cell.getYCoOrdinate();
+    for (Cell piece : pieces) {
+      if (moveOneCellDiagonalTopRight(piece).equals(cell)) return true;
+      if (moveOneCellDiagonalBottomRight(piece).equals(cell)) return true;
+      if (moveOneCellDiagonalBottomLeft(piece).equals(cell)) return true;
+      if (moveOneCellDiagonalTopLeft(piece).equals(cell)) return true;
+      if (moveOneCellLeft(piece).equals(cell)) return true;
+      if (moveOneCellRight(piece).equals(cell)) return true;
+      if (moveOneCellUp(piece).equals(cell)) return true;
+      if (moveOneCellDown(piece).equals(cell)) return true;
     }
+    return false;
+  }
 
 
   /**

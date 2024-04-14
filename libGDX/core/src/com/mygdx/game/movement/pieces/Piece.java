@@ -4,31 +4,47 @@ import com.mygdx.game.movement.Board;
 import com.mygdx.game.movement.Cell;
 import com.mygdx.game.movement.CoOrdinatePair;
 
+import java.util.Optional;
 import java.util.Set;
+import java.util.stream.Collectors;
 
-/**
- * Candace: Provide a concrete implementation for Piece.
- */
 public interface Piece {
+
   /**
    * @return true if your piece. false if enemy piece
    */
   boolean isPlayerPiece();
 
   /**
-   * @return Set of CoOrdinates this Piece can move to.
-   * CoOrdinates do not necessarily exist within the bounds of the Board.
-   * @see Board#getCell(CoOrdinatePair) most likely to be used in combination with
-   * this method to retrieve all Cells the Piece can reach.
-   * @see Cell#isOccupied() might be queried along with Cell#getPiece() -> Piece#isPlayerPiece
-   * to determine if it is a capturable move, etc.
+   * A Piece can only occupy empty Cells,
+   * or Cells controlled by Pieces of the opposing faction.
+   *
+   * @param cell to validate movement to.
+   * @return true if the Piece can occupy the Cell.
    */
-  Set<CoOrdinatePair> moveSet(int xOrigin, int yOrigin, Board board);
+  default boolean canOccupyCell(Cell cell) {
+    Optional<Piece> piece = cell.getPiece();
+    return piece.map(value -> (value.isPlayerPiece() != this.isPlayerPiece())).orElse(true);
+  }
 
   /**
-   * @see Piece#moveSet(int, int, Board) delegates.
+   * @return Set of CoOrdinates this Piece has valid moves on.
    */
   default Set<CoOrdinatePair> moveSet(CoOrdinatePair coOrdinatePair, Board board) {
-    return moveSet(coOrdinatePair.getX(), coOrdinatePair.getY(), board);
+    return potentialMoveSet(coOrdinatePair).stream()
+            .map(board::getCell)
+            .filter(Optional::isPresent)
+            .map(Optional::get)
+            .filter(this::canOccupyCell)
+            .map(Cell::getCoOrdinatePair)
+            .collect(Collectors.toSet());
   }
+
+  /**
+   * @return Set of all possible CoOrdinates this Piece could move to. These CoOrdinates do not
+   * have to be valid, and are meant to be filtered.
+   * @see Piece#moveSet(CoOrdinatePair, Board)
+   */
+  Set<CoOrdinatePair> potentialMoveSet(CoOrdinatePair origin);
+
 }
