@@ -1,4 +1,4 @@
-package com.mygdx.game;
+package com.mygdx.game.event;
 
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
