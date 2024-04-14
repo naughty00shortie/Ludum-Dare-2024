@@ -1,27 +1,55 @@
 package com.mygdx.game.round;
 
-import static com.mygdx.game.round.Turn.*;
+import com.mygdx.game.players.Player;
+
+import java.util.Random;
 
 public class RoundManager {
 
-    private Turn currentTurn = ENEMY_TURN;
+  private Turn currentTurn = Turn.ENEMY_TURN;
 
-    public Turn getCurrentTurn() {
-        return currentTurn;
-    }
+  private static final int MANA_PER_TURN_INCREASE = 1;
 
-    public void startTurn() {
-        // calculate mana
-        // present menu ui if player turn
-        // send output to user depending on turn stuff
-    }
+  private volatile boolean pause = true;
 
-    public void executeMove(Move m) {
-        m.execute();
-        // check if valid move wrt mana
-    }
+  public static final RoundManager INSTANCE = new RoundManager();
 
-    public void endTurn() {
-        currentTurn = currentTurn == ENEMY_TURN ? PLAYER_TURN : ENEMY_TURN;
-    }
+  public RoundManager() {
+  }
+
+  public void run() {
+    new Thread(() -> {
+      while (true) {
+        INSTANCE.startTurn();
+      }
+    }).start();
+  }
+
+  private void startTurn() {
+    pause();
+    while (pause) ;
+  }
+
+  public void executeMove(Move m) {
+    m.execute();
+    unPause();
+  }
+
+  private synchronized void pause() {
+    pause = true;
+  }
+
+  private synchronized void unPause() {
+    pause = false;
+    INSTANCE.endTurn();
+  }
+
+  private synchronized void endTurn() {
+    whosTurn().increaseMannaBy(MANA_PER_TURN_INCREASE);
+    currentTurn = currentTurn == Turn.ENEMY_TURN ? Turn.PLAYER_TURN : Turn.ENEMY_TURN;
+  }
+
+  public synchronized Player whosTurn() {
+    return null;
+  }
 }
