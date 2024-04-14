@@ -70,7 +70,6 @@ public class PlayMenuScreen extends ApplicationAdapter {
     float fontScale = 1.5f;
     font.getData().setScale(fontScale);
 
-
     moveButton.setPosition(background.x + background.width / 2 - moveButton.getWidth() / 2,
             background.y + background.height / 2 + buttonSpacing / 2);
     summonButton.setPosition(background.x + background.width / 2 - summonButton.getWidth() / 2,
@@ -88,7 +87,6 @@ public class PlayMenuScreen extends ApplicationAdapter {
     summonButton.addListener(new ClickListener() {
       @Override
       public void clicked(InputEvent event, float x, float y) {
-        // Handle summon button click
         System.out.println("Summon button clicked!");
       }
     });
