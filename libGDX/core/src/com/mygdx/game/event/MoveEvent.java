@@ -141,11 +141,10 @@ public class MoveEvent {
           destination.removePiece(); // Send this somewhere
           SpriteManager.removeSpriteFrom(destination);
         }
-        SpriteManager.removeSpriteFrom(origin);
         SpriteManager.placeSpriteOn(pieceFrom(origin), destination);
+        SpriteManager.removeSpriteFrom(origin);
         SoundUtils.playCrashSound();
-        destination.placePiece(pieceFrom(origin));
-        origin.removePiece();
+        destination.placePiece(origin.removePiece()); // TODO Inner class shenanigans, this may not actually be moving on the Board.
         return super.touchDown(event, x, y, pointer, button);
       }
     });
