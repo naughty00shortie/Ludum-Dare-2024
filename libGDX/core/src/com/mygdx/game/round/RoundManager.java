@@ -16,7 +16,8 @@ public class RoundManager {
         // send output to user depending on turn stuff
     }
 
-    public void executeMove() {
+    public void executeMove(Move m) {
+        m.execute();
         // check if valid move wrt mana
     }
 

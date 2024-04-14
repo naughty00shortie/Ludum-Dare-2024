@@ -1,25 +1,25 @@
 package com.mygdx.game.movement.pieces;
 
+import com.mygdx.game.movement.Board;
 import com.mygdx.game.movement.CoOrdinatePair;
+import com.mygdx.game.players.Player;
 
 import java.util.HashSet;
 import java.util.Set;
 
 public class Sentinel implements Piece {
 
-  private final boolean isPlayerPiece;
+  private Player owner;
 
-  public Sentinel(boolean isPlayerPiece) {
-    this.isPlayerPiece = isPlayerPiece;
-  }
+  private Board board;
 
-  public Sentinel() {
-    this(true);
+  public Sentinel(Player owner) {
+    this.owner = owner;
   }
 
   @Override
-  public boolean isPlayerPiece() {
-    return isPlayerPiece;
+  public boolean isPlayerPiece(Player player) {
+    return owner.equals(player);
   }
 
   @Override
@@ -34,6 +34,21 @@ public class Sentinel implements Piece {
     moveSet.add(origin.down().left());
     moveSet.add(origin.down().right());
     return moveSet;
+  }
+
+  @Override
+  public int value() {
+    return 3;
+  }
+
+  @Override
+  public Player getOwner() {
+    return owner;
+  }
+
+  @Override
+  public Board getBoard() {
+    return board;
   }
 
 }
