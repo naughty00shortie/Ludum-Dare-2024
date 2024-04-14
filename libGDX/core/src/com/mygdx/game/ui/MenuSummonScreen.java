@@ -16,6 +16,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 
 import java.awt.*;
 
+
 public class MenuSummonScreen extends ApplicationAdapter {
 
 
@@ -25,9 +26,9 @@ public class MenuSummonScreen extends ApplicationAdapter {
 
   public static final int BUTTON_PADDING = 100;
 
-  public static final int POS_X = 1200;
+  public static final int POS_X = 1050;
 
-  public static final int POS_Y = 800;
+  public static final int POS_Y = 180;
 
   private Stage stage;
 
@@ -37,7 +38,6 @@ public class MenuSummonScreen extends ApplicationAdapter {
 
   private String[] skinNames = {"pawn", "knight", "bishop", "rook", "queen", "king"};
 
-  private Rectangle background;
 
   private ShapeRenderer shapeRenderer;
 
@@ -77,9 +77,8 @@ public class MenuSummonScreen extends ApplicationAdapter {
       buttons[i] = new ImageButton(skins[i].getDrawable(skinNames[i]));
       buttons[i].setStyle(ImageButtonStyles[i]);
 
-      background = new Rectangle(POS_X, POS_Y, 2 * (BUTTON_WIDTH + BUTTON_PADDING), 2 * (BUTTON_HEIGHT + BUTTON_PADDING));
 
-      buttons[i].setPosition(background.x + i * (BUTTON_PADDING) + 250, background.y+ (BUTTON_PADDING));
+      buttons[i].setPosition(POS_X + i * (BUTTON_PADDING) + 250, POS_Y+ (BUTTON_PADDING));
 
       int finalI = i;
       buttons[i].addListener(new ChangeListener() {
@@ -93,17 +92,13 @@ public class MenuSummonScreen extends ApplicationAdapter {
 
     shapeRenderer = new ShapeRenderer();
     Vector3 touchPos = new Vector3();
-    touchPos.set(POS_X - 650, Gdx.graphics.getHeight() - POS_Y + 200 + background.y - background.height, 0);
+    touchPos.set(POS_X , Gdx.graphics.getHeight() - POS_Y + POS_Y - BUTTON_HEIGHT, 0);
     camera.unproject(touchPos);
   }
 
   @Override
   public void render() {
     stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
-    shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
-    shapeRenderer.setColor(0, 1, 1, 1);
-    shapeRenderer.rect(background.x, background.y, background.width, background.height);
-    shapeRenderer.end();
     stage.draw();
   }
 
