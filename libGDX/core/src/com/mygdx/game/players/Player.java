@@ -52,13 +52,16 @@ public class Player {
 
   public void movePiece(CoOrdinatePair from, CoOrdinatePair to) {
     board.getCell(from).ifPresent(fromCell -> {
-      fromCell.getPiece().ifPresent(piece -> {
-        if (piece.isPlayerPiece(this)) board.movePiece(from, to);
-        else {
-          summonedPieces.add(piece); //you took the opponents piece, now it's yours
-          mana += piece.value();
-          fromCell.removePiece(); //remove the piece
-        }
+      board.getCell(to).ifPresent(toCell -> {
+        fromCell.getPiece().ifPresent(fromPiece -> {
+          if (fromPiece.isPlayerPiece(this) && fromPiece.validMove(from, to)) {
+            toCell.getPiece().ifPresent(toPiece -> {
+              summonedPieces.add(toPiece); //you took the opponents toPiece, now it's yours
+              mana += toPiece.value();
+            });
+            board.movePiece(from, to); //also removes the piece on from, if there is a piece. Places piece on to.
+          }
+        });
       });
     });
 
