@@ -81,4 +81,9 @@ public class Castle implements Piece {
   public Board getBoard() {
     return board;
   }
+
+  @Override
+  public Player getOwner() {
+    return owner;
+  }
 }

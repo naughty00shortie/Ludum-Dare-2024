@@ -56,8 +56,10 @@ public class Player {
         fromCell.getPiece().ifPresent(fromPiece -> {
           if (fromPiece.isPlayerPiece(this) && fromPiece.validMove(from, to)) {
             toCell.getPiece().ifPresent(toPiece -> {
+              // fromPiece.validMove(from, to) should return false if this is the players piece
               summonedPieces.add(toPiece); //you took the opponents toPiece, now it's yours
               mana += toPiece.value();
+              toPiece.getOwner().reduceMannaBy(toPiece.value());
             });
             board.movePiece(from, to); //also removes the piece on from, if there is a piece. Places piece on to.
           }
@@ -81,6 +83,10 @@ public class Player {
 
   public Collection<Piece> getSummonedPieces() {
     return summonedPieces;
+  }
+
+  public void reduceMannaBy(int amount) {
+    mana -= amount;
   }
 
 }
