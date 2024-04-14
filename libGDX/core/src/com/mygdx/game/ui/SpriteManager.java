@@ -33,7 +33,11 @@ public class SpriteManager {
   }
 
   public static void placeSpriteOn(Piece piece, Cell cell) {
-    cell.setStyle(styleForPiece(piece));
+    placeSpriteOn(piece.getClass(), cell);
+  }
+
+  public static void placeSpriteOn(Class<? extends Piece> pieceClass, Cell cell) {
+    cell.setStyle(styleFor(pieceClass));
   }
 
   public static void removeSpriteFrom(Cell cell) {
@@ -57,16 +61,16 @@ public class SpriteManager {
   // Helper methods
 
   /**
-   * @see SpriteManager#styleForClass(Class)
+   * @see SpriteManager#styleFor(Class)
    */
-  public static ImageButton.ImageButtonStyle styleForPiece(Piece piece) {
-    return styleForClass(piece.getClass());
+  public static ImageButton.ImageButtonStyle styleFor(Piece piece) {
+    return styleFor(piece.getClass());
   }
 
   /**
    * @return new ImageButtonStyle that has the sprites for this Piece class preset.
    */
-  public static ImageButton.ImageButtonStyle styleForClass(Class<? extends Piece> pieceClass) {
+  public static ImageButton.ImageButtonStyle styleFor(Class<? extends Piece> pieceClass) {
     ImageButton.ImageButtonStyle style = new ImageButton.ImageButtonStyle();
     Drawable pieceSkin;
     if (pieceClass == Grunt.class) {

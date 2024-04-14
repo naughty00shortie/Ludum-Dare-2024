@@ -1,9 +1,6 @@
 package com.mygdx.game.movement;
 
-import com.badlogic.gdx.math.Circle;
-import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
-import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.mygdx.game.movement.pieces.Piece;
 
 import java.awt.*;
@@ -24,23 +21,14 @@ public class Cell extends Button {
 
   public Cell() {
     rectangle = null;
-    xCoOrdinate = - 1;
-    yCoOrdinate = - 1;
+    xCoOrdinate = -1;
+    yCoOrdinate = -1;
   }
 
   public Cell(int xCoOrdinate, int yCoOrdinate, int offset, int size) {
     this.xCoOrdinate = xCoOrdinate;
     this.yCoOrdinate = yCoOrdinate;
     this.rectangle = new Rectangle(xCoOrdinate * offset, yCoOrdinate * offset, size, size);
-
-    addListener(new ClickListener() {
-      @Override
-      public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-        System.out.println("Cell at " + Cell.this.xCoOrdinate + ", " + Cell.this.yCoOrdinate + " clicked!");
-        isSelected = ! isSelected;
-        return super.touchDown(event, x, y, pointer, button);
-      }
-    });
   }
 
   public Cell(int xCoOrdinate, int yCoOrdinate, Rectangle rect) {
@@ -85,7 +73,7 @@ public class Cell extends Button {
    * @throws IllegalStateException if there was no Piece on the Cell.
    */
   public Piece removePiece() throws IllegalStateException {
-    if (! isOccupied()) {
+    if (!isOccupied()) {
       throw new IllegalStateException("I have no piece");
     }
     Piece tempPiece = piece;
@@ -100,7 +88,6 @@ public class Cell extends Button {
   public int getYCoOrdinate() {
     return yCoOrdinate;
   }
-
 
 
   @Override
@@ -128,7 +115,7 @@ public class Cell extends Button {
    * @see CoOrdinatePair#equals(Object)
    * @see Board#getCell(CoOrdinatePair)
    */
-  public CoOrdinatePair getCoOrdinatePair(){
+  public CoOrdinatePair getCoOrdinatePair() {
     return new CoOrdinatePair(getXCoOrdinate(), getYCoOrdinate());
   }
 }
