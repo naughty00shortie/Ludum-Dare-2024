@@ -70,10 +70,10 @@ public class Player {
 
   public void placeSummonedPiece(Piece p, CoOrdinatePair to) {
     board.getCell(to).ifPresent(toCell -> {
-      toCell.getPiece().ifPresent(piece -> {
-        if (piece.isPlayerPiece(this)) board.summon(p, to);
-        else summonedPieces.add(piece);
-      });
+      if (! toCell.isOccupied()) {
+        board.summon(p, to);
+        summonedPieces.remove(p);
+      }
     });
     //    TODO: throw some execptions
   }
