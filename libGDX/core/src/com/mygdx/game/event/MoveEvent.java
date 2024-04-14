@@ -5,6 +5,7 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
+import com.mygdx.game.SoundUtils;
 import com.mygdx.game.movement.Board;
 import com.mygdx.game.movement.Cell;
 import com.mygdx.game.movement.pieces.Piece;
@@ -142,6 +143,9 @@ public class MoveEvent {
         }
         SpriteManager.removeSpriteFrom(origin);
         SpriteManager.placeSpriteOn(pieceFrom(origin), destination);
+        SoundUtils.playCrashSound();
+        destination.placePiece(pieceFrom(origin));
+        origin.removePiece();
         return super.touchDown(event, x, y, pointer, button);
       }
     });
