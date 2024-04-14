@@ -63,6 +63,7 @@ public class SummonEvent {
       public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
         System.out.println("CLICKED!");
         end(); // Though this is junk, and probably a bad idea to remove listeners within a listener - IT WORKS!
+        cell.placePiece(piece);
         SpriteManager.placeSpriteOn(piece, cell); // place sprite after cleaning up other places.
         return super.touchDown(event, x, y, pointer, button);
       }
