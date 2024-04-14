@@ -15,11 +15,13 @@ public class MyGdxGame extends ApplicationAdapter {
      menuScreen = new MenuSummonScreen();
      menuScreen.create();
     //chessBoardRenderer = new ChessBoardRenderer();
-//    chessBoardRenderer.create();
+    //chessBoardRenderer.create();
   }
 
   @Override
   public void render() {
+
+    //chessBoardRenderer.render();
 //    chessBoardRenderer.render();
     menuScreen.render();
   }
@@ -27,6 +29,6 @@ public class MyGdxGame extends ApplicationAdapter {
   @Override
   public void dispose() {
     menuScreen.dispose();
-//    chessBoardRenderer.dispose();
+    //chessBoardRenderer.dispose();
   }
 }

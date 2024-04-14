@@ -25,7 +25,7 @@ public class ChessBoardRenderer extends ApplicationAdapter {
 
   public boolean renderFriendlySummoningPosition = true;
 
-  public boolean renderEnemySummoningPosition = true;
+  public boolean renderEnemySummoningPosition = false;
 
   private ShapeRenderer shapeRenderer;
 
