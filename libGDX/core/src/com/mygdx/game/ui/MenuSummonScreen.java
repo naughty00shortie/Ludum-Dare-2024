@@ -124,7 +124,7 @@ public class MenuSummonScreen extends ApplicationAdapter {
   @Override
   public void dispose() {
     stage.dispose();
-    for (int i = 0; i < 7; i++) {
+    for (int i = 0; i < skins.length; i++) {
       skins[i].dispose();
       buttons[i].clear();
     }
