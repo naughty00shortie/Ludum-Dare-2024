@@ -1,12 +1,11 @@
 package com.mygdx.game.players;
 
 import com.mygdx.game.movement.Board;
-import com.mygdx.game.movement.Cell;
 import com.mygdx.game.movement.CoOrdinatePair;
 import com.mygdx.game.movement.pieces.Piece;
 
 import java.util.Collection;
-import java.util.Optional;
+import java.util.LinkedList;
 
 /**
  * The Mana Strategy (Suggestion):
@@ -44,30 +43,30 @@ public class Player {
 
   private final Board board;
 
-  private Collection<Piece> summonedPieces;
+  private final Collection<Piece> summonedPieces = new LinkedList<>();
 
   public Player(Board board) {
     this.board = board;
   }
 
   public void movePiece(CoOrdinatePair from, CoOrdinatePair to) {
-    board.getCell(from).ifPresent(fromCell -> {
-      board.getCell(to).ifPresent(toCell -> {
-        fromCell.getPiece().ifPresent(fromPiece -> {
-          if (fromPiece.isPlayerPiece(this) && fromPiece.validMove(from, to)) {
-            toCell.getPiece().ifPresent(toPiece -> {
-              // fromPiece.validMove(from, to) should return false if this is the players piece
-              summonedPieces.add(toPiece); //you took the opponents toPiece, now it's yours
-              mana += toPiece.value();
-              toPiece.getOwner().reduceMannaBy(toPiece.value());
-            });
-            board.movePiece(from, to); //also removes the piece on from, if there is a piece. Places piece on to.
-          }
-        });
-      });
-    });
+    board.getCell(from)
+            .ifPresent(fromCell -> board.getCell(to)
+                    .ifPresent(toCell -> fromCell.getPiece()
+                            .ifPresent(fromPiece -> {
+                              if (fromPiece.isPlayerPiece(this) && fromPiece.validMove(from, to)) {
+                                toCell.getPiece()
+                                        .ifPresent(toPiece -> {
+                                          // fromPiece.validMove(from, to) should return false if this is the players piece
+                                          summonedPieces.add(toPiece); //you took the opponents toPiece, now it's yours
+                                          mana += toPiece.value();
+                                          toPiece.getOwner().reduceMannaBy(toPiece.value());
+                                        });
+                                board.movePiece(from, to); //also removes the piece on from, if there is a piece. Places piece on to.
+                              }
+                            })));
 
-//    TODO: throw some execptions
+//    TODO: throw some exceptions
   }
 
   public void placeSummonedPiece(Piece p, CoOrdinatePair to) {
@@ -78,7 +77,7 @@ public class Player {
         mana -= p.value();
       }
     });
-    //    TODO: throw some execptions
+    //    TODO: throw some exceptions
   }
 
   public Collection<Piece> getSummonedPieces() {
@@ -89,4 +88,7 @@ public class Player {
     mana -= amount;
   }
 
+  public int getMana() {
+    return mana;
+  }
 }
