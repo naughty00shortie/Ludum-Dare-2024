@@ -57,6 +57,7 @@ public class ChessBoardRenderer extends ApplicationAdapter {
     }
     board.setCells(cells);
 //    demoSummonEvent(); // TODO Uncomment for a Summon Demo!
+    demoSummonEvent();
   }
 
   @Override
@@ -139,6 +140,10 @@ public class ChessBoardRenderer extends ApplicationAdapter {
     SpriteManager.placeSpriteOn(piece, cell);
     // Trigger the Summon Event!
     new SummonEvent(board, new Sentinel(new Player(board))).start();
+  }
+
+  public Stage getStage() {
+    return stage;
   }
 }
 
