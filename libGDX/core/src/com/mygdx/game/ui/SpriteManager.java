@@ -1,6 +1,7 @@
 package com.mygdx.game.ui;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
@@ -51,7 +52,7 @@ public class SpriteManager {
   }
 
   public static void placeSpriteOn(Class<? extends Piece> pieceClass, Cell cell) {
-    placeSpriteOn(styleFor(pieceClass), cell);
+    placeSpriteOn(spriteFor(pieceClass), cell);
   }
 
   public static void removeSpriteFrom(Cell cell) {
@@ -93,16 +94,16 @@ public class SpriteManager {
   // Helper methods
 
   /**
-   * @see SpriteManager#styleFor(Class)
+   * @see SpriteManager#spriteFor(Class)
    */
-  public static Drawable styleFor(Piece piece) {
-    return styleFor(piece.getClass());
+  public static Drawable spriteFor(Piece piece) {
+    return spriteFor(piece.getClass());
   }
 
   /**
    * @return new ImageButtonStyle that has the sprites for this Piece class preset.
    */
-  public static Drawable styleFor(Class<? extends Piece> pieceClass) {
+  public static Drawable spriteFor(Class<? extends Piece> pieceClass) {
     Drawable pieceSkin;
     if (pieceClass == Grunt.class) {
       pieceSkin = getGrunt();
@@ -114,5 +115,13 @@ public class SpriteManager {
       throw new UnsupportedOperationException("");
     }
     return pieceSkin;
+  }
+
+  public static Drawable tintForSprite(Piece piece, Color color) {
+    return tintForSprite(spriteFor(piece), color);
+  }
+
+  public static Drawable tintForSprite(Drawable sprite, Color color) {
+    return spriteSkins.newDrawable(sprite, color);
   }
 }

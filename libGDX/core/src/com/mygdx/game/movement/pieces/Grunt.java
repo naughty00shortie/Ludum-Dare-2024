@@ -16,7 +16,9 @@ public class Grunt implements Piece {
 
   Board board;
 
-
+  public Grunt(Player player) {
+    this.owner = player;
+  }
 
   @Override
   public boolean isPlayerPiece(Player player) {

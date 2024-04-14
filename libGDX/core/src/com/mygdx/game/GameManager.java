@@ -39,6 +39,7 @@ public class GameManager extends ApplicationAdapter {
     multiplexer.addProcessor(chessBoardRenderer.getStage());
 
     Gdx.input.setInputProcessor(multiplexer);
+    SoundUtils.create();
   }
 
   @Override
