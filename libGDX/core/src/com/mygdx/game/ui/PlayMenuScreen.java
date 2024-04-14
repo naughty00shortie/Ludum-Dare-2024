@@ -43,6 +43,10 @@ public class PlayMenuScreen extends ApplicationAdapter {
 
   private Skin skin;
 
+  private TextButton moveButton;
+
+  private TextButton summonButton;
+
   @Override
   public void create() {
 
@@ -72,8 +76,8 @@ public class PlayMenuScreen extends ApplicationAdapter {
 
     textButtonStyle.font = font;
 
-    TextButton moveButton = new TextButton("Move", textButtonStyle);
-    TextButton summonButton = new TextButton("Summon", textButtonStyle);
+    moveButton = new TextButton("Move", textButtonStyle);
+    summonButton = new TextButton("Summon", textButtonStyle);
 
     moveButton.setSize(BUTTON_WIDTH, BUTTON_HEIGHT);
     summonButton.setSize(BUTTON_WIDTH, BUTTON_HEIGHT);
@@ -134,5 +138,13 @@ public class PlayMenuScreen extends ApplicationAdapter {
 
   public Stage getStage() {
     return stage;
+  }
+
+  public TextButton getMoveButton() {
+    return moveButton;
+  }
+
+  public TextButton getSummonButton() {
+    return summonButton;
   }
 }
