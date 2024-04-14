@@ -10,6 +10,7 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
@@ -116,5 +117,17 @@ public class MenuSummonScreen extends ApplicationAdapter {
 
   public Stage getStage() {
     return stage;
+  }
+
+  public Button getGruntButton() {
+    return buttons[0];
+  }
+
+  public Button getSentinelButton() {
+    return buttons[0];
+  }
+
+  public Button getHopperButton() {
+    return buttons[0];
   }
 }

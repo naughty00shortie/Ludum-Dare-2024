@@ -59,4 +59,16 @@ public class GameManager extends ApplicationAdapter {
     summonScreen.dispose();
     manaUI.dispose();
   }
+
+  public ChessBoardRenderer getChessBoardRenderer() {
+    return chessBoardRenderer;
+  }
+
+  public PlayMenuScreen getPlayMenuScreen() {
+    return playMenuScreen;
+  }
+
+  public MenuSummonScreen getSummonScreen() {
+    return summonScreen;
+  }
 }

@@ -170,6 +170,10 @@ public class ChessBoardRenderer extends ApplicationAdapter {
   public Stage getStage() {
     return stage;
   }
+
+  public Board getBoard() {
+    return board;
+  }
 }
 
 
