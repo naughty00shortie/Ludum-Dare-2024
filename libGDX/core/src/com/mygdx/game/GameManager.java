@@ -4,6 +4,7 @@ import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.graphics.GL20;
+import com.mygdx.game.event.EventCoordinator;
 import com.mygdx.game.ui.ChessBoardRenderer;
 import com.mygdx.game.ui.ManaUI;
 import com.mygdx.game.ui.MenuSummonScreen;
@@ -40,6 +41,7 @@ public class GameManager extends ApplicationAdapter {
 
     Gdx.input.setInputProcessor(multiplexer);
     SoundUtils.create();
+    new EventCoordinator(this).run();
   }
 
   @Override

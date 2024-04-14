@@ -32,10 +32,12 @@ public class EventCoordinator {
   // API
 
   public void run() {
-//    activateSummonButton(); // TODO Run for Summoning Demo.
+    activateSummonButton(); // TODO Uncomment for Summoning Demo.
+    activateMoveButton(); // TODO Uncomment for Moving Demo.
   }
 
-  // Helpers
+
+  // Class Utils.
 
   private Player currentPlayer() {
     return roundManager.getCurrentTurn().getPlayer();
@@ -45,7 +47,10 @@ public class EventCoordinator {
     return this;
   }
 
+
   // --- --- Event Handling --- ---
+
+  // Summon Events
 
   private void activateSummonButton() {
     summonButton.addListener(new ClickListener() {
@@ -64,5 +69,22 @@ public class EventCoordinator {
 
   private void callbackToSummonPiece(Piece piece) {
     new SummonEvent(board, piece).start();
+  }
+
+  // Move Events
+
+  private void activateMoveButton() {
+    moveButton.addListener(new ClickListener() {
+      @Override
+      public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+        deactivateMoveButton();
+        new MoveEvent(board, currentPlayer()).start();
+        return super.touchDown(event, x, y, pointer, button);
+      }
+    });
+  }
+
+  private void deactivateMoveButton() {
+    summonButton.clearListeners();
   }
 }
