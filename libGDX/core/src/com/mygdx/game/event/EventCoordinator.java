@@ -10,6 +10,8 @@ import com.mygdx.game.players.Player;
 import com.mygdx.game.round.RoundManager;
 import com.mygdx.game.ui.MenuSummonScreen;
 
+import java.util.function.Consumer;
+
 public class EventCoordinator {
 
   private final RoundManager roundManager = RoundManager.INSTANCE;
@@ -32,8 +34,7 @@ public class EventCoordinator {
   // API
 
   public void run() {
-    activateSummonButton(); // TODO Uncomment for Summoning Demo.
-    activateMoveButton(); // TODO Uncomment for Moving Demo.
+    activateSummonButton();
   }
 
 
@@ -47,6 +48,25 @@ public class EventCoordinator {
     return this;
   }
 
+  /**
+   * TODO Connect this with the RoundManager, which will require some reworking/simplification.
+   * Temporarily just reactivates buttons.
+   *
+   * @return method reference to end the Player's turn.
+   */
+  private Callback thenEndTurn() {
+    System.out.println("Coordinator requesting to end turn");
+    //    return (roundManager::endTurn);
+    return () -> {
+      System.out.println("Round begins!");
+      activateMoveButton();
+      activateSummonButton();
+    };
+  }
+
+  private Consumer<Piece> thenSummonPiece() {
+    return (piece) -> new SummonEvent(board, piece).start(thenEndTurn());
+  }
 
   // --- --- Event Handling --- ---
 
@@ -57,7 +77,7 @@ public class EventCoordinator {
       @Override
       public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
         deactivateSummonButton();
-        new SummonSelectionEvent(summonScreen, eventCoordinator()::callbackToSummonPiece).start();
+        new SummonSelectionEvent(summonScreen).start(thenSummonPiece());
         return super.touchDown(event, x, y, pointer, button);
       }
     });
@@ -67,10 +87,6 @@ public class EventCoordinator {
     summonButton.clearListeners();
   }
 
-  private void callbackToSummonPiece(Piece piece) {
-    new SummonEvent(board, piece).start();
-  }
-
   // Move Events
 
   private void activateMoveButton() {
@@ -78,7 +94,7 @@ public class EventCoordinator {
       @Override
       public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
         deactivateMoveButton();
-        new MoveEvent(board, currentPlayer()).start();
+        new MoveEvent(board, currentPlayer()).start(thenEndTurn());
         return super.touchDown(event, x, y, pointer, button);
       }
     });

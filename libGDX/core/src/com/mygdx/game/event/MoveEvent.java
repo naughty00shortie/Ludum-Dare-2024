@@ -25,6 +25,8 @@ public class MoveEvent {
 
   private final Drawable possibleMove;
 
+  private Callback callback;
+
   public MoveEvent(Board board, Player player) {
     this.board = board;
     this.player = player;
@@ -33,7 +35,8 @@ public class MoveEvent {
 
   // --- --- API --- ---
 
-  public void start() {
+  public void start(Callback callback) {
+    this.callback = callback;
     startSelectPiece();
   }
 
@@ -45,6 +48,7 @@ public class MoveEvent {
       unmarkAsSelectable(cell);
       destinationCellsFrom(cell).forEach(this::unmarkAsDestinationCell);
     });
+    callback.call();
   }
 
   // --- --- First Stage --- ---

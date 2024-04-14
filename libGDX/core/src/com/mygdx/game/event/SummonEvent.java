@@ -30,6 +30,8 @@ public class SummonEvent {
 
   private final Drawable summoningCircle;
 
+  private Callback callback;
+
   public SummonEvent(Board board, Piece piece) {
     this.board = board;
     this.piece = piece;
@@ -42,7 +44,8 @@ public class SummonEvent {
    * We begin the SummonEvent by highlighting available Cells and setting
    * action listeners on their cells.
    */
-  public void start() {
+  public void start(Callback callback) {
+    this.callback = callback;
     summonableCells().forEach(this::markAsTargetForSummon);
   }
 
@@ -52,6 +55,7 @@ public class SummonEvent {
    */
   public void end() {
     summonableCells().forEach(this::unmarkAsTargetForSummon);
+    callback.call();
   }
 
 

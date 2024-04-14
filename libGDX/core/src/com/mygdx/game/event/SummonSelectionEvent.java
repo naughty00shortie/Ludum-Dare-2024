@@ -21,27 +21,28 @@ public class SummonSelectionEvent {
 
   private final Button hopperButton;
 
-  private final Consumer<Piece> callback;
+  private Consumer<Piece> callback;
 
-  public SummonSelectionEvent(MenuSummonScreen summonScreen, Consumer<Piece> callback) {
+  public SummonSelectionEvent(MenuSummonScreen summonScreen) {
     gruntButton = summonScreen.getGruntButton();
     sentinelButton = summonScreen.getSentinelButton();
     hopperButton = summonScreen.getHopperButton();
-    this.callback = callback;
   }
 
   // API
 
-  public void start() {
+  public void start(Consumer<Piece> callback) {
+    this.callback = callback;
     activateGruntButton();
     activateSentinelButton();
     activateHopperButton();
   }
 
-  public void end() {
+  public void end(Piece piece) {
     gruntButton.clearListeners();
     sentinelButton.clearListeners();
     hopperButton.clearListeners();
+    callback.accept(piece);
   }
 
   // Helper
@@ -56,9 +57,7 @@ public class SummonSelectionEvent {
     gruntButton.addListener(new ClickListener() {
       @Override
       public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-        System.out.println("Grunt");
-        end();
-        callback.accept(new Grunt(currentPlayer()));
+        end(new Grunt(currentPlayer()));
         return super.touchDown(event, x, y, pointer, button);
       }
     });
@@ -68,9 +67,7 @@ public class SummonSelectionEvent {
     sentinelButton.addListener(new ClickListener() {
       @Override
       public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-        System.out.println("Sentinel");
-        end();
-        callback.accept(new Sentinel(currentPlayer()));
+        end(new Sentinel(currentPlayer()));
         return super.touchDown(event, x, y, pointer, button);
       }
     });
@@ -80,9 +77,7 @@ public class SummonSelectionEvent {
     hopperButton.addListener(new ClickListener() {
       @Override
       public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-        System.out.println("Hopper");
-        end();
-        callback.accept(new Hopper(currentPlayer()));
+        end(new Hopper(currentPlayer()));
         return super.touchDown(event, x, y, pointer, button);
       }
     });
