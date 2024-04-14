@@ -17,6 +17,10 @@ import java.awt.*;
 
 public class PlayMenuScreen extends ApplicationAdapter {
 
+  private static final int X_POS = 0;
+
+  private static final int Y_POS = -300;
+
   private Stage stage;
 
   private OrthographicCamera camera;
@@ -31,15 +35,11 @@ public class PlayMenuScreen extends ApplicationAdapter {
 
   private ShapeRenderer shapeRenderer;
 
-  private int x = 0;
-
-  private int y = 0;
-
   @Override
 
   public void create() {
     shapeRenderer = new ShapeRenderer();
-    background = new Rectangle((Gdx.graphics.getWidth() / 4) + 800 , Gdx.graphics.getHeight() / 4, Gdx.graphics.getWidth() / 5, Gdx.graphics.getHeight() / 2);
+    background = new Rectangle((Gdx.graphics.getWidth() / 4) + 800 + X_POS, Gdx.graphics.getHeight() / 4 + Y_POS, Gdx.graphics.getWidth() / 5, Gdx.graphics.getHeight() / 2);
     batch = new SpriteBatch();
     font = new BitmapFont();
 
@@ -121,5 +121,9 @@ public class PlayMenuScreen extends ApplicationAdapter {
     batch.dispose();
     skin.dispose();
     font.dispose();
+  }
+
+  public Stage getStage() {
+    return stage;
   }
 }

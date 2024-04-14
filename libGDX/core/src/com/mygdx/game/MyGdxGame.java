@@ -1,8 +1,6 @@
 package com.mygdx.game;
 
 import com.badlogic.gdx.ApplicationAdapter;
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.audio.Music;
 import com.mygdx.game.ui.ChessBoardRenderer;
 import com.mygdx.game.ui.ManaUI;
 import com.mygdx.game.ui.MenuSummonScreen;

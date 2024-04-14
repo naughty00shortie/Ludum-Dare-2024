@@ -5,6 +5,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
@@ -139,6 +140,10 @@ public class ChessBoardRenderer extends ApplicationAdapter {
     SpriteManager.placeSpriteOn(piece, cell);
     // Trigger the Summon Event!
     new SummonEvent(board, new Sentinel(new Player(board))).start();
+  }
+
+  public Stage getStage() {
+    return stage;
   }
 }
 

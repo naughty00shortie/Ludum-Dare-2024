@@ -12,6 +12,6 @@ public class DesktopLauncher {
 		config.useVsync(true);
 		config.setWindowedMode(1920,1080);
 		config.setTitle("Summoning");
-		new Lwjgl3Application(new MyGdxGame(), config);
+		new Lwjgl3Application(new GameManager(), config);
 	}
 }

@@ -29,7 +29,7 @@ public class MenuSummonScreen extends ApplicationAdapter {
 
   public static final int POS_X = 1200;
 
-  public static final int POS_Y = 300;
+  public static final int POS_Y = 500;
 
   private Stage stage;
 
@@ -101,7 +101,7 @@ public class MenuSummonScreen extends ApplicationAdapter {
 
     shapeRenderer = new ShapeRenderer();
     background = new Rectangle(POS_X, POS_Y, 2 * (BUTTON_WIDTH + BUTTON_PADDING), 2 * (BUTTON_HEIGHT + BUTTON_PADDING));    Vector3 touchPos = new Vector3();
-    touchPos.set(POS_X-650,   Gdx.graphics.getHeight() - POS_Y +450+ background.y-background.height, 0);
+    touchPos.set(POS_X-650,   Gdx.graphics.getHeight() - POS_Y +200+ background.y-background.height, 0);
     camera.unproject(touchPos);
     table.setPosition(touchPos.x, touchPos.y);
   }
@@ -129,5 +129,9 @@ public class MenuSummonScreen extends ApplicationAdapter {
       buttons[i].clear();
     }
     shapeRenderer.dispose();
+  }
+
+  public Stage getStage() {
+    return stage;
   }
 }
