@@ -8,8 +8,13 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
+import com.mygdx.game.event.SummonEvent;
 import com.mygdx.game.movement.Board;
 import com.mygdx.game.movement.Cell;
+import com.mygdx.game.movement.CoOrdinatePair;
+import com.mygdx.game.movement.pieces.Grunt;
+import com.mygdx.game.movement.pieces.Sentinel;
+import com.mygdx.game.players.Player;
 
 import java.awt.*;
 
@@ -46,11 +51,12 @@ public class ChessBoardRenderer extends ApplicationAdapter {
 
         Button.ButtonStyle buttonStyle = new Button.ButtonStyle();
         cells[i][j].setStyle(buttonStyle);
-        cells[i][j].setBounds((i + 1) * OFFSET , (j + 1) * OFFSET, SIZE, SIZE);
+        cells[i][j].setBounds((i + 1) * OFFSET, (j + 1) * OFFSET, SIZE, SIZE);
         buttonStyle.up = whiteDrawable;
       }
     }
     board.setCells(cells);
+//    demoSummonEvent(); // TODO Uncomment for a Summon Demo!
   }
 
   @Override
@@ -121,6 +127,18 @@ public class ChessBoardRenderer extends ApplicationAdapter {
   @Override
   public void dispose() {
     shapeRenderer.dispose();
+  }
+
+  // Event Demos
+
+  private void demoSummonEvent() {
+    // Demo an allied piece 'blocking' a summon square.
+    Grunt piece = new Grunt();
+    Cell cell = board.getCell(new CoOrdinatePair(0, 0)).get();
+    cell.placePiece(piece);
+    SpriteManager.placeSpriteOn(piece, cell);
+    // Trigger the Summon Event!
+    new SummonEvent(board, new Sentinel(new Player(board))).start();
   }
 }
 
