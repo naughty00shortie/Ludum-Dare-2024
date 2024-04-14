@@ -3,6 +3,7 @@ package com.mygdx.game.movement.pieces;
 import com.mygdx.game.movement.Board;
 import com.mygdx.game.movement.Cell;
 import com.mygdx.game.movement.CoOrdinatePair;
+import com.mygdx.game.players.Player;
 
 import java.util.Optional;
 import java.util.Set;
@@ -10,10 +11,12 @@ import java.util.stream.Collectors;
 
 public interface Piece {
 
+
+
   /**
    * @return true if your piece. false if enemy piece
    */
-  boolean isPlayerPiece();
+  boolean isPlayerPiece(Player player);
 
   /**
    * A Piece can only occupy empty Cells,
@@ -24,7 +27,7 @@ public interface Piece {
    */
   default boolean canOccupyCell(Cell cell) {
     Optional<Piece> piece = cell.getPiece();
-    return piece.map(value -> (value.isPlayerPiece() != this.isPlayerPiece())).orElse(true);
+    return piece.map(value -> (value.isPlayerPiece(getOwner()) != this.isPlayerPiece(getOwner()))).orElse(true);
   }
 
   /**
@@ -46,5 +49,15 @@ public interface Piece {
    * @see Piece#moveSet(CoOrdinatePair, Board)
    */
   Set<CoOrdinatePair> potentialMoveSet(CoOrdinatePair origin);
+
+  default boolean validMove(CoOrdinatePair from, CoOrdinatePair to) {
+    return moveSet(from, getBoard()).contains(to);
+  }
+
+  int value();
+
+  Player getOwner();
+
+  Board getBoard();
 
 }

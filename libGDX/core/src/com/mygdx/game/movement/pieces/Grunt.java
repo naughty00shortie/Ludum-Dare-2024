@@ -1,6 +1,8 @@
 package com.mygdx.game.movement.pieces;
 
+import com.mygdx.game.movement.Board;
 import com.mygdx.game.movement.CoOrdinatePair;
+import com.mygdx.game.players.Player;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -10,19 +12,15 @@ import java.util.Set;
  */
 public class Grunt implements Piece {
 
-  private final boolean isPlayerPiece;
+  Player owner;
 
-  public Grunt(boolean isPlayerPiece) {
-    this.isPlayerPiece = isPlayerPiece;
-  }
+  Board board;
 
-  public Grunt() {
-    this(true);
-  }
+
 
   @Override
-  public boolean isPlayerPiece() {
-    return isPlayerPiece;
+  public boolean isPlayerPiece(Player player) {
+    return owner.equals(player);
   }
 
   /**
@@ -31,12 +29,27 @@ public class Grunt implements Piece {
    */
   @Override
   public Set<CoOrdinatePair> potentialMoveSet(CoOrdinatePair origin) {
-    CoOrdinatePair step = (isPlayerPiece()) ? origin.up() : origin.down();
+    CoOrdinatePair step = (isPlayerPiece(owner)) ? origin.up() : origin.down();
     Set<CoOrdinatePair> moveSet = new HashSet<>();
     moveSet.add(step);
     moveSet.add(step.left());
     moveSet.add(step.right());
     return moveSet;
+  }
+
+  @Override
+  public int value() {
+    return 1;
+  }
+
+  @Override
+  public Player getOwner() {
+    return owner;
+  }
+
+  @Override
+  public Board getBoard() {
+    return board;
   }
 
 }
