@@ -26,7 +26,7 @@ public class ChessBoardRenderer extends ApplicationAdapter {
 
   public static final int OFFSET = 100;
 
-  private final Board board = new Board();
+  private final Board board = Board.INSTANCE;
 
   public boolean renderFriendlySummoningPosition = true;
 

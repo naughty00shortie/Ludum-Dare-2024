@@ -1,6 +1,19 @@
 package com.mygdx.game.round;
 
+import com.mygdx.game.movement.Board;
+import com.mygdx.game.players.Player;
+
 public enum Turn {
-    PLAYER_TURN,
-    ENEMY_TURN
+    PLAYER_TURN(new Player(Board.INSTANCE)),
+    ENEMY_TURN(new Player(Board.INSTANCE));
+
+    private Player player;
+
+    Turn(Player player) {
+        this.player = player;
+    }
+
+    public Player getPlayer() {
+        return player;
+    }
 }

@@ -8,32 +8,13 @@ import java.util.Collection;
 import java.util.LinkedList;
 
 /**
- * The Mana Strategy (Suggestion):
- * <p>
- * Your mana corresponds to the total value of pieces you have.
- * Each piece has a value, in classical chess it is as follows:
- * Pawn: 1 point.
- * Knight: 3 points.
- * Bishop: 3 points.
- * Rook: 5 points.
- * Queen: 9 points.
- * <p>
- * In classical chess, at the beginning of the game, you have 8 pawns, 2 knights,
- * 2 bishops , and 2 rooks and 1 one queen, which leaves you with 8 + 6 + 6 + 10 + 9 points
- * <p>
- * <p>
- * However at the beginning,  if we start off with each player having too much manner, it means they can
- * summon really powerful pieces from the start.
- * Thus, at the start each player starts off with a set amount of pieces but 0 mana.
- * <p>
- * When you lose a piece, you lose mana. Eg. If you lose a pawn, you lose 1 point of mana.
- * <p>
- * When you take a piece, you gain mana. Eg. If you take a pawn, you earn 1 point of mana.
- * <p>
- * You can only summon pieces that you have taken. When you summon a piece, you use mana.
- * Eg. If you summon a pawn, you use a 1 point of mana.
- * <p>
- * There is no relation between manner and each turn.
+ * Each piece has a value. At the beginning you are given 9 units of mana.
+ * The cost of summoning pieces:
+ * Grunt: 1
+ * Sentinal: 3
+ * Hopper: 5
+ *
+ * When you capture a piece, you earn mana according to the value of the captured piece.
  */
 public class Player {
 
@@ -42,6 +23,7 @@ public class Player {
   private int mana = INIT_MANA;
 
   private final Board board;
+
 
   private final Collection<Piece> summonedPieces = new LinkedList<>();
 
@@ -67,6 +49,7 @@ public class Player {
   }
 
   public void placeSummonedPiece(Piece p, CoOrdinatePair to) {
+    if(mana < p.value()) throw new IllegalStateException("You do now have enough mana to summon this piece");
     board.getCell(to).ifPresent(toCell -> {
       if (! toCell.isOccupied()) {
         board.summon(p, to);
@@ -83,6 +66,10 @@ public class Player {
 
   public void reduceMannaBy(int amount) {
     mana -= amount;
+  }
+
+  public void increaseMannaBy(int amount) {
+    mana += amount;
   }
 
   public int getMana() {

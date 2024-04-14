@@ -22,7 +22,9 @@ public class Board {
 
   private Cell[][] cells = new Cell[BOARD_SIZE][BOARD_SIZE];
 
-  public Board() {
+  public static final Board INSTANCE = new Board();
+
+  private Board() {
     buildBoardCells();
   }
 
