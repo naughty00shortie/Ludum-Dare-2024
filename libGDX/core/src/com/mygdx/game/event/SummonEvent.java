@@ -4,6 +4,7 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
+import com.mygdx.game.SoundUtils;
 import com.mygdx.game.movement.Board;
 import com.mygdx.game.movement.Cell;
 import com.mygdx.game.movement.pieces.Piece;
@@ -61,8 +62,8 @@ public class SummonEvent {
     cell.addListener(new ClickListener() {
       @Override
       public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-        System.out.println("CLICKED!");
         end(); // Though this is junk, and probably a bad idea to remove listeners within a listener - IT WORKS!
+        SoundUtils.playSummonSound();
         cell.placePiece(piece);
         SpriteManager.placeSpriteOn(piece, cell); // place sprite after cleaning up other places.
         return super.touchDown(event, x, y, pointer, button);
