@@ -1,7 +1,9 @@
 package com.mygdx.game.event;
 
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.mygdx.game.movement.Board;
 import com.mygdx.game.movement.Cell;
 import com.mygdx.game.movement.pieces.Piece;
@@ -25,9 +27,12 @@ public class SummonEvent {
 
   private final Piece piece;
 
+  private final Drawable summoningCircle;
+
   public SummonEvent(Board board, Piece piece) {
     this.board = board;
     this.piece = piece;
+    summoningCircle = SpriteManager.getSummoningCircle();
   }
 
   // --- API ---
@@ -37,7 +42,7 @@ public class SummonEvent {
    * action listeners on their cells.
    */
   public void start() {
-    summonableCells().forEach(this::addClickListener);
+    summonableCells().forEach(this::markAsTargetForSummon);
   }
 
   /**
@@ -45,21 +50,31 @@ public class SummonEvent {
    * just in case.
    */
   public void end() {
-    summonableCells().forEach(Cell::clearListeners);
+    summonableCells().forEach(this::unmarkAsTargetForSummon);
   }
+
 
   // Engine
 
-  private void addClickListener(Cell cell) {
+  private void markAsTargetForSummon(Cell cell) {
+    SpriteManager.placeSpriteOn(summoningCircle, cell);
     cell.addListener(new ClickListener() {
       @Override
       public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
         System.out.println("CLICKED!");
-        SpriteManager.placeSpriteOn(piece, cell);
         end(); // Though this is junk, and probably a bad idea to remove listeners within a listener - IT WORKS!
+        SpriteManager.placeSpriteOn(piece, cell); // place sprite after cleaning up other places.
         return super.touchDown(event, x, y, pointer, button);
       }
     });
+  }
+
+  /**
+   * @param cell target to remove action listeners and custom sprites from.
+   */
+  private void unmarkAsTargetForSummon(Cell cell) {
+    cell.clearListeners();
+    cell.setStyle(new Button.ButtonStyle());
   }
 
   /**
