@@ -118,6 +118,10 @@ public class SpriteManager {
   }
 
   public static Drawable tintForSprite(Piece piece, Color color) {
-    return spriteSkins.newDrawable(spriteFor(piece), color);
+    return tintForSprite(spriteFor(piece), color);
+  }
+
+  public static Drawable tintForSprite(Drawable sprite, Color color) {
+    return spriteSkins.newDrawable(sprite, color);
   }
 }
