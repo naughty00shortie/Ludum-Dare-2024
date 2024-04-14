@@ -59,11 +59,22 @@ public class Board {
     cells[newX][newY].placePiece(p);
   }
 
+  /**
+   * Takes the piece on the 'from' coordinate and places it on the 'to' coordinate.
+   * It removes any existing piece on 'to'
+   * @param from
+   * @param to
+   *
+   * @throws IllegalStateException if the Cell is already Occupied. (from cell.placePiece(piece);)
+   */
   public void movePiece(CoOrdinatePair from, CoOrdinatePair to) {
     getCell(from).ifPresentOrElse(fromCell -> {
       fromCell.getPiece().ifPresentOrElse(piece -> {
         fromCell.removePiece();
-        getCell(to).ifPresentOrElse(cell -> cell.placePiece(piece), () -> {
+        getCell(to).ifPresentOrElse(cell -> {
+          cell.removePiece();
+          cell.placePiece(piece);
+        }, () -> {
           throw new RuntimeException(to + ", cell does not exist on board");
         });
       }, () -> {
