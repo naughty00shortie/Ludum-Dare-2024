@@ -8,11 +8,13 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
+import com.mygdx.game.event.MoveEvent;
 import com.mygdx.game.event.SummonEvent;
 import com.mygdx.game.movement.Board;
 import com.mygdx.game.movement.Cell;
 import com.mygdx.game.movement.CoOrdinatePair;
 import com.mygdx.game.movement.pieces.Grunt;
+import com.mygdx.game.movement.pieces.Piece;
 import com.mygdx.game.movement.pieces.Sentinel;
 import com.mygdx.game.players.Player;
 
@@ -56,8 +58,8 @@ public class ChessBoardRenderer extends ApplicationAdapter {
       }
     }
     board.setCells(cells);
-//    demoSummonEvent(); // TODO Uncomment for a Summon Demo!
-    demoSummonEvent();
+    //    demoMoveEvent();  // TODO Uncomment for a Move Demo!
+    //    demoSummonEvent(); // TODO Uncomment for a Summon Demo!
   }
 
   @Override
@@ -130,16 +132,39 @@ public class ChessBoardRenderer extends ApplicationAdapter {
     shapeRenderer.dispose();
   }
 
-  // Event Demos
+  // --- --- Event Demos (can be removed, just to illustrate functionality) --- ---
 
   private void demoSummonEvent() {
     // Demo an allied piece 'blocking' a summon square.
-    Grunt piece = new Grunt();
+    Player player = new Player(board);
+    Grunt piece = new Grunt(player);
     Cell cell = board.getCell(new CoOrdinatePair(0, 0)).get();
     cell.placePiece(piece);
     SpriteManager.placeSpriteOn(piece, cell);
     // Trigger the Summon Event!
-    new SummonEvent(board, new Sentinel(new Player(board))).start();
+    new SummonEvent(board, new Sentinel(player)).start();
+  }
+
+  private void demoMoveEvent() {
+    // Place a Piece
+    Player player = new Player(board);
+    Piece piece = new Sentinel(player);
+    Cell cell = board.getCell(new CoOrdinatePair(0, 0)).get();
+    cell.placePiece(piece);
+    SpriteManager.placeSpriteOn(piece, cell);
+    // Place an allied Piece
+    Piece ally = new Grunt(player);
+    Cell allyCell = board.getCell(new CoOrdinatePair(1, 0)).get();
+    allyCell.placePiece(ally);
+    SpriteManager.placeSpriteOn(ally, allyCell);
+    //    Place enemy piece
+    Player enemyPlayer = new Player(board);
+    Piece enemyPiece = new Sentinel(enemyPlayer);
+    Cell enemyCell = board.getCell(new CoOrdinatePair(1, 1)).get();
+    enemyCell.placePiece(enemyPiece);
+    SpriteManager.placeSpriteOn(SpriteManager.getEnemy(), enemyCell);
+    // Start move event for the player
+    new MoveEvent(board, player).start();
   }
 
   public Stage getStage() {
