@@ -21,9 +21,14 @@ public class SpriteManager {
 
   static {
     spriteSkins = new Skin();
-    spriteSkins.add("grunt", new Texture(Gdx.files.internal("grunt_back.png")));
-    spriteSkins.add("hopper", new Texture(Gdx.files.internal("hopper_forward.png")));
-    spriteSkins.add("sentinel", new Texture(Gdx.files.internal("sentinel_forward.png")));
+    spriteSkins.add("enemy", new Texture(Gdx.files.internal("summons/enemy_back.png")));
+    spriteSkins.add("grunt", new Texture(Gdx.files.internal("summons/grunt_forward.png")));
+    spriteSkins.add("hopper", new Texture(Gdx.files.internal("summons/hopper_forward.png")));
+    spriteSkins.add("sentinel", new Texture(Gdx.files.internal("summons/sentinel_forward.png")));
+
+    spriteSkins.add("possible_move", new Texture(Gdx.files.internal("utility_sprites/possible_move.png")));
+    spriteSkins.add("selected_square", new Texture(Gdx.files.internal("utility_sprites/selected_square.png")));
+    spriteSkins.add("summoning_circle", new Texture(Gdx.files.internal("utility_sprites/summoning_circle.png")));
   }
 
   /**
@@ -32,19 +37,46 @@ public class SpriteManager {
   private SpriteManager() {
   }
 
+  public static void placeSpriteOn(Drawable sprite, Cell cell) {
+    ImageButton.ImageButtonStyle style = new ImageButton.ImageButtonStyle();
+    style.up = sprite;
+    style.down = sprite;
+    cell.setStyle(style);
+  }
+
+  // Delegators for convenience.
+
   public static void placeSpriteOn(Piece piece, Cell cell) {
     placeSpriteOn(piece.getClass(), cell);
   }
 
   public static void placeSpriteOn(Class<? extends Piece> pieceClass, Cell cell) {
-    cell.setStyle(styleFor(pieceClass));
+    placeSpriteOn(styleFor(pieceClass), cell);
   }
 
   public static void removeSpriteFrom(Cell cell) {
     cell.setStyle(new ImageButton.ImageButtonStyle());
   }
 
-  // Utilities API
+  // Utilities Accessors
+
+  public static Drawable getPossibleMove() {
+    return spriteSkins.getDrawable("possible_move");
+  }
+
+  public static Drawable getSelectedSquare() {
+    return spriteSkins.getDrawable("selected_square");
+  }
+
+  public static Drawable getSummoningCircle() {
+    return spriteSkins.getDrawable("summoning_circle");
+  }
+
+  // Summons Accessors
+
+  public static Drawable getEnemy() {
+    return spriteSkins.getDrawable("enemy");
+  }
 
   public static Drawable getGrunt() {
     return spriteSkins.getDrawable("grunt");
@@ -63,15 +95,14 @@ public class SpriteManager {
   /**
    * @see SpriteManager#styleFor(Class)
    */
-  public static ImageButton.ImageButtonStyle styleFor(Piece piece) {
+  public static Drawable styleFor(Piece piece) {
     return styleFor(piece.getClass());
   }
 
   /**
    * @return new ImageButtonStyle that has the sprites for this Piece class preset.
    */
-  public static ImageButton.ImageButtonStyle styleFor(Class<? extends Piece> pieceClass) {
-    ImageButton.ImageButtonStyle style = new ImageButton.ImageButtonStyle();
+  public static Drawable styleFor(Class<? extends Piece> pieceClass) {
     Drawable pieceSkin;
     if (pieceClass == Grunt.class) {
       pieceSkin = getGrunt();
@@ -82,8 +113,6 @@ public class SpriteManager {
     } else {
       throw new UnsupportedOperationException("");
     }
-    style.up = pieceSkin;
-    style.down = pieceSkin;
-    return style;
+    return pieceSkin;
   }
 }
