@@ -1,7 +1,6 @@
 package com.mygdx.game.round;
 
 import com.mygdx.game.players.Player;
-
 public class RoundManager {
 
   private Turn currentTurn = Turn.ENEMY_TURN;
@@ -13,8 +12,9 @@ public class RoundManager {
 
   public static final RoundManager INSTANCE = new RoundManager();
 
-  public RoundManager() {
-  }
+    public Turn getCurrentTurn() {
+        return currentTurn;
+    }
 
   public void run() {
     new Thread(() -> {
@@ -55,4 +55,6 @@ public class RoundManager {
   public void stop() {
     run = false;
   }
+
+
 }
