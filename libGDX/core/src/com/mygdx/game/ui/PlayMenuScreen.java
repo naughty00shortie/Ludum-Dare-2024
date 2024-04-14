@@ -7,16 +7,19 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
-import java.awt.*;
-
 public class PlayMenuScreen extends ApplicationAdapter {
+
+  public static final int BUTTON_SPACING = 20;
+
+  public static final int BUTTON_WIDTH = 150;
+
+  public static final int BUTTON_HEIGHT = 75;
 
   private static final int X_POS = 1200;
 
@@ -26,12 +29,6 @@ public class PlayMenuScreen extends ApplicationAdapter {
 
   private static final int BACKGROUND_HEIGHT = Gdx.graphics.getHeight() / 4 + 300;
 
-  public static final int BUTTON_SPACING = 20;
-
-  public static final int BUTTON_WIDTH = 150;
-
-  public static final int BUTTON_HEIGHT = 75;
-
   private Stage stage;
 
   private OrthographicCamera camera;
@@ -40,25 +37,19 @@ public class PlayMenuScreen extends ApplicationAdapter {
 
   private BitmapFont font;
 
-  private Rectangle background;
-
   private Texture backgroundTexture;
 
   private Sprite backgroundSprite;
 
   private Skin skin;
 
-  private ShapeRenderer shapeRenderer;
-
   @Override
-
   public void create() {
 
     backgroundTexture = new Texture("options_background.png");
-    shapeRenderer = new ShapeRenderer();
 
     backgroundSprite = new Sprite(backgroundTexture);
-    backgroundSprite.setPosition( X_POS,  Y_POS);
+    backgroundSprite.setPosition(X_POS, Y_POS);
     backgroundSprite.setSize(BACKGROUND_WIDTH, BACKGROUND_HEIGHT);
     batch = new SpriteBatch();
     font = new BitmapFont();
@@ -71,8 +62,8 @@ public class PlayMenuScreen extends ApplicationAdapter {
 
     skin = new Skin();
 
-    skin.add("buttonUp", new Texture("png/button_base.png"));
-    skin.add("buttonDown", new Texture("png/button_hover.png"));
+    skin.add("buttonUp", new Texture("button_base.png"));
+    skin.add("buttonDown", new Texture("button_hover.png"));
 
     TextButton.TextButtonStyle textButtonStyle = new TextButton.TextButtonStyle();
 
@@ -82,7 +73,7 @@ public class PlayMenuScreen extends ApplicationAdapter {
     textButtonStyle.font = font;
 
     TextButton moveButton = new TextButton("Move", textButtonStyle);
-    TextButton summonButton = new TextButton("Summon",textButtonStyle);
+    TextButton summonButton = new TextButton("Summon", textButtonStyle);
 
     moveButton.setSize(BUTTON_WIDTH, BUTTON_HEIGHT);
     summonButton.setSize(BUTTON_WIDTH, BUTTON_HEIGHT);
@@ -92,7 +83,7 @@ public class PlayMenuScreen extends ApplicationAdapter {
 
     moveButton.setPosition(X_POS + BACKGROUND_WIDTH / 2 - moveButton.getWidth() / 2,
             Y_POS + BACKGROUND_HEIGHT / 2 + BUTTON_SPACING / 2);
-    summonButton.setPosition(X_POS +BACKGROUND_WIDTH / 2 - summonButton.getWidth() / 2,
+    summonButton.setPosition(X_POS + BACKGROUND_WIDTH / 2 - summonButton.getWidth() / 2,
             Y_POS + BACKGROUND_HEIGHT / 2 - summonButton.getHeight() - BUTTON_SPACING / 2);
 
 

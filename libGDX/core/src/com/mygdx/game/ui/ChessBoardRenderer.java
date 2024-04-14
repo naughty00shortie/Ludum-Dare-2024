@@ -57,6 +57,7 @@ public class ChessBoardRenderer extends ApplicationAdapter {
     }
     board.setCells(cells);
 //    demoSummonEvent(); // TODO Uncomment for a Summon Demo!
+    demoSummonEvent();
   }
 
   @Override

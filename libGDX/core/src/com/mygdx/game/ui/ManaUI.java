@@ -32,11 +32,10 @@ public class ManaUI extends ApplicationAdapter {
 
   private SpriteBatch batch;
 
-
   @Override
   public void create() {
     shapeRenderer = new ShapeRenderer();
-    texture = new Texture(Gdx.files.internal("manabar.png"));
+    texture = new Texture(Gdx.files.internal("manabar_2.png"));
     sprite = new Sprite(texture);
     batch = new SpriteBatch();
   }

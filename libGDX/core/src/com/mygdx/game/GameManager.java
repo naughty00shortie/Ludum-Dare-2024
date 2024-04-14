@@ -13,8 +13,6 @@ public class GameManager extends ApplicationAdapter {
 
   ChessBoardRenderer chessBoardRenderer;
 
-  PlayMenuScreen menuScreen;
-
   MenuSummonScreen summonScreen;
 
   PlayMenuScreen playMenuScreen;
@@ -23,14 +21,11 @@ public class GameManager extends ApplicationAdapter {
 
   @Override
   public void create() {
-    playMenuScreen = new PlayMenuScreen();
-    playMenuScreen.create(); // Ensure that the object is initialized before calling its methods
-
-    menuScreen = new PlayMenuScreen();
-    menuScreen.create();
-
     chessBoardRenderer = new ChessBoardRenderer();
     chessBoardRenderer.create();
+
+    playMenuScreen = new PlayMenuScreen();
+    playMenuScreen.create();
 
     summonScreen = new MenuSummonScreen();
     summonScreen.create();
@@ -39,10 +34,9 @@ public class GameManager extends ApplicationAdapter {
     manaUI.create();
 
     InputMultiplexer multiplexer = new InputMultiplexer();
-
+    multiplexer.addProcessor(playMenuScreen.getStage());
     multiplexer.addProcessor(summonScreen.getStage());
     multiplexer.addProcessor(chessBoardRenderer.getStage());
-    multiplexer.addProcessor(menuScreen.getStage());
 
     Gdx.input.setInputProcessor(multiplexer);
   }
@@ -52,15 +46,14 @@ public class GameManager extends ApplicationAdapter {
     Gdx.gl.glClearColor(0, 0, 0, 1);
     Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
     playMenuScreen.render();
-    chessBoardRenderer.render();
-    manaUI.render();
     summonScreen.render();
+    manaUI.render();
+    chessBoardRenderer.render();
   }
 
   @Override
   public void dispose() {
     playMenuScreen.dispose();
-    menuScreen.dispose();
     chessBoardRenderer.dispose();
     summonScreen.dispose();
     manaUI.dispose();
