@@ -1,5 +1,10 @@
 package com.mygdx.game.movement;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.utils.viewport.ScreenViewport;
+
 import com.mygdx.game.movement.pieces.Piece;
 
 import java.util.HashSet;
@@ -22,9 +27,12 @@ public class Board {
 
   private Cell[][] cells = new Cell[BOARD_SIZE][BOARD_SIZE];
 
+
+
   public Board() {
-    buildBoardCells();
+
   }
+
 
   /**
    * Initialise, or reset, the cells on this board.
@@ -83,6 +91,8 @@ public class Board {
     for (int i = 0; i < cells.length; i++) {
       for (int j = 0; j < cells[i].length; j++) {
         Cell cell = cells[i][j];
+        if (! cell.isOccupied() && cellIsAdjacentToPiece(cell, pieces)) summonablePositions.add(cell);
+        if (j == 0) summonablePositions.add(cell);
         if (!cell.isOccupied() && cellIsAdjacentToPiece(cell, pieces)) {
           summonablePositions.add(cell);
         }
@@ -96,8 +106,8 @@ public class Board {
 
     // IANDRO: "this is nasty, so fix it if it doesn't work"
     private boolean cellIsAdjacentToPiece(Cell cell, Set<Cell> pieces) {
-        int cellX = cell.getX();
-        int cellY = cell.getY();
+        int cellX = cell.getXCoOrdinate();
+        int cellY = cell.getYCoOrdinate();
         for (Cell piece : pieces) {
             if (moveOneCellDiagonalTopRight(piece).equals(cell)) return true;
             if (moveOneCellDiagonalBottomRight(piece).equals(cell)) return true;
