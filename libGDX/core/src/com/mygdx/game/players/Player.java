@@ -1,7 +1,6 @@
 package com.mygdx.game.players;
 
 import com.mygdx.game.movement.Board;
-import com.mygdx.game.movement.Cell;
 import com.mygdx.game.movement.CoOrdinatePair;
 import com.mygdx.game.movement.pieces.Piece;
 
