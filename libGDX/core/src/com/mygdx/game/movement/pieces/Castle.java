@@ -13,9 +13,16 @@ public class Castle implements Piece {
 
   private Player owner;
 
+  private Board board;
+
+  public Castle(Player owner, Board board) {
+    this.owner = owner;
+    this.board = board;
+  }
+
   @Override
   public boolean isPlayerPiece(Player p) {
-    return false;
+    return owner.equals(p);
   }
 
   /**
@@ -68,5 +75,10 @@ public class Castle implements Piece {
   @Override
   public int value() {
     return 5;
+  }
+
+  @Override
+  public Board getBoard() {
+    return board;
   }
 }
