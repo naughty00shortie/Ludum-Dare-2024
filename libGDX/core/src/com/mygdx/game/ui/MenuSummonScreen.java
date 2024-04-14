@@ -119,15 +119,17 @@ public class MenuSummonScreen extends ApplicationAdapter {
     return stage;
   }
 
+  // Accessor: Based on buttons ordering. TODO: Refactor to use SpriteManager here.
+
   public Button getGruntButton() {
     return buttons[0];
   }
 
   public Button getSentinelButton() {
-    return buttons[0];
+    return buttons[2];
   }
 
   public Button getHopperButton() {
-    return buttons[0];
+    return buttons[1];
   }
 }
