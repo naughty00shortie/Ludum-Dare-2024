@@ -13,18 +13,17 @@ public class MyGdxGame extends ApplicationAdapter {
 
   @Override
   public void create() {
-    menuScreen = new MenuSummonScreen();
-    menuScreen.create();
-    //chessBoardRenderer = new ChessBoardRenderer();
-    //chessBoardRenderer.create();
+
     //todo add this to main game class to enable sound
+
     SoundUtils.create();
+    chessBoardRenderer = new ChessBoardRenderer();
+    chessBoardRenderer.create();
   }
 
   @Override
   public void render() {
-    //chessBoardRenderer.render();
-    menuScreen.render();
+    chessBoardRenderer.render();
   }
 
   @Override

@@ -14,8 +14,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 
-import java.awt.*;
-
 
 public class MenuSummonScreen extends ApplicationAdapter {
 
@@ -37,7 +35,6 @@ public class MenuSummonScreen extends ApplicationAdapter {
   private Skin[] skins;
 
   private String[] skinNames = {"pawn", "knight", "bishop", "rook", "queen", "king"};
-
 
   private ShapeRenderer shapeRenderer;
 
@@ -69,7 +66,7 @@ public class MenuSummonScreen extends ApplicationAdapter {
     for (int i = 0; i < 3; i++) {
       ImageButtonStyles[i] = new ImageButton.ImageButtonStyle();
       ImageButtonStyles[i].up = skins[i].newDrawable(skinNames[i], Color.WHITE);
-      ImageButtonStyles[i].down = skins[i].newDrawable(skinNames[i], new Color(1f, 0, 0, 1));
+      ImageButtonStyles[i].down = skins[i].newDrawable(skinNames[i], Color.WHITE);
       ImageButtonStyles[i].checked = skins[i].newDrawable(skinNames[i], new Color(0.1f, 0.8f, 1, 1));
       ImageButtonStyles[i].over = skins[i].newDrawable(skinNames[i], Color.DARK_GRAY);
 
@@ -78,7 +75,7 @@ public class MenuSummonScreen extends ApplicationAdapter {
       buttons[i].setStyle(ImageButtonStyles[i]);
 
 
-      buttons[i].setPosition(POS_X + i * (BUTTON_PADDING) + 250, POS_Y+ (BUTTON_PADDING));
+      buttons[i].setPosition(POS_X + i * (BUTTON_PADDING) + 250, POS_Y + (BUTTON_PADDING));
 
       int finalI = i;
       buttons[i].addListener(new ChangeListener() {
@@ -92,7 +89,7 @@ public class MenuSummonScreen extends ApplicationAdapter {
 
     shapeRenderer = new ShapeRenderer();
     Vector3 touchPos = new Vector3();
-    touchPos.set(POS_X , Gdx.graphics.getHeight() - POS_Y + POS_Y - BUTTON_HEIGHT, 0);
+    touchPos.set(POS_X, Gdx.graphics.getHeight() - POS_Y + POS_Y - BUTTON_HEIGHT, 0);
     camera.unproject(touchPos);
   }
 
