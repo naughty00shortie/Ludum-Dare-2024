@@ -73,6 +73,7 @@ public class Player {
       if (! toCell.isOccupied()) {
         board.summon(p, to);
         summonedPieces.remove(p);
+        mana -= p.value();
       }
     });
     //    TODO: throw some execptions
