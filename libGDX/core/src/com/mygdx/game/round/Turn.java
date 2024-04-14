@@ -9,7 +9,8 @@ public enum Turn {
 
     private Player player;
 
-    Turn(Player p) {
+    Turn(Player player) {
+        this.player = player;
     }
 
     public Player getPlayer() {

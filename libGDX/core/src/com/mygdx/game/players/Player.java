@@ -49,6 +49,7 @@ public class Player {
   }
 
   public void placeSummonedPiece(Piece p, CoOrdinatePair to) {
+    if(mana < p.value()) throw new IllegalStateException("You do now have enough mana to summon this piece");
     board.getCell(to).ifPresent(toCell -> {
       if (! toCell.isOccupied()) {
         board.summon(p, to);

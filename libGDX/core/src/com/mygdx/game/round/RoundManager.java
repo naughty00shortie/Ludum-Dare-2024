@@ -2,8 +2,6 @@ package com.mygdx.game.round;
 
 import com.mygdx.game.players.Player;
 
-import java.util.Random;
-
 public class RoundManager {
 
   private Turn currentTurn = Turn.ENEMY_TURN;
@@ -11,6 +9,7 @@ public class RoundManager {
   private static final int MANA_PER_TURN_INCREASE = 1;
 
   private volatile boolean pause = true;
+  private volatile boolean run = true;
 
   public static final RoundManager INSTANCE = new RoundManager();
 
@@ -19,10 +18,10 @@ public class RoundManager {
 
   public void run() {
     new Thread(() -> {
-      while (true) {
+      while (run) {
         INSTANCE.startTurn();
       }
-    }).start();
+    });
   }
 
   private void startTurn() {
@@ -45,11 +44,15 @@ public class RoundManager {
   }
 
   private synchronized void endTurn() {
-    whosTurn().increaseMannaBy(MANA_PER_TURN_INCREASE);
+    whoseTurn().increaseMannaBy(MANA_PER_TURN_INCREASE);
     currentTurn = currentTurn == Turn.ENEMY_TURN ? Turn.PLAYER_TURN : Turn.ENEMY_TURN;
   }
 
-  public synchronized Player whosTurn() {
-    return null;
+  public synchronized Player whoseTurn() {
+    return currentTurn.getPlayer();
+  }
+
+  public void stop() {
+    run = false;
   }
 }
