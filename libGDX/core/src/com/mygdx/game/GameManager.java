@@ -4,6 +4,7 @@ import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.graphics.GL20;
+import com.mygdx.game.round.RoundManager;
 import com.mygdx.game.ui.ChessBoardRenderer;
 import com.mygdx.game.ui.ManaUI;
 import com.mygdx.game.ui.MenuSummonScreen;
@@ -50,6 +51,7 @@ public class GameManager extends ApplicationAdapter {
     summonScreen.render();
     manaUI.render();
     chessBoardRenderer.render();
+    RoundManager.INSTANCE.run();
   }
 
   @Override
