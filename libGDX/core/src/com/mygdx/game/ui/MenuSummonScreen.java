@@ -40,10 +40,17 @@ public class MenuSummonScreen extends ApplicationAdapter {
 
   private OrthographicCamera camera;
 
+  private ImageButton.ImageButtonStyle[] ImageButtonStyles;
+
+
+  private boolean[] isSelecteds = {false, false, false};
+
+  private boolean isSelected = false;
+
+
   @Override
   public void create() {
     stage = new Stage();
-    Gdx.input.setInputProcessor(stage);
     camera = new OrthographicCamera();
     camera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 
@@ -60,7 +67,7 @@ public class MenuSummonScreen extends ApplicationAdapter {
     skins[1].add("knight", new Texture(Gdx.files.internal("hopper_forward.png")));
     skins[2].add("bishop", new Texture(Gdx.files.internal("sentinel_forward.png")));
 
-    ImageButton.ImageButtonStyle[] ImageButtonStyles = new ImageButton.ImageButtonStyle[6];
+    ImageButtonStyles = new ImageButton.ImageButtonStyle[6];
 
     buttons = new ImageButton[3];
     for (int i = 0; i < 3; i++) {
@@ -78,8 +85,16 @@ public class MenuSummonScreen extends ApplicationAdapter {
       buttons[i].setPosition(POS_X + i * (BUTTON_PADDING) + 250, POS_Y + (BUTTON_PADDING));
 
       int finalI = i;
+
       buttons[i].addListener(new ChangeListener() {
         public void changed(ChangeEvent event, Actor actor) {
+          // Unselect all buttons
+          for (int j = 0; j < buttons.length; j++) {
+            if (j != finalI) {
+              buttons[j].setChecked(false);
+            }
+          }
+          buttons[finalI].setChecked(true);
           System.out.println("Clicked! Is checked:  " + finalI + " " + buttons[finalI].isChecked());
         }
       });
@@ -91,6 +106,7 @@ public class MenuSummonScreen extends ApplicationAdapter {
     Vector3 touchPos = new Vector3();
     touchPos.set(POS_X, Gdx.graphics.getHeight() - POS_Y + POS_Y - BUTTON_HEIGHT, 0);
     camera.unproject(touchPos);
+
   }
 
   @Override

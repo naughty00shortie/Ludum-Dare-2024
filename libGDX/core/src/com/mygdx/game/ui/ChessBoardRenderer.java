@@ -32,6 +32,10 @@ public class ChessBoardRenderer extends ApplicationAdapter {
 
   public boolean renderEnemySummoningPosition = false;
 
+  public final int Y_POS = 75;
+
+  public final int X_POS = 75;
+
   private ShapeRenderer shapeRenderer;
 
   private Stage stage;
@@ -51,7 +55,7 @@ public class ChessBoardRenderer extends ApplicationAdapter {
 
         Button.ButtonStyle buttonStyle = new Button.ButtonStyle();
         cells[i][j].setStyle(buttonStyle);
-        cells[i][j].setBounds((i + 1) * OFFSET, (j + 1) * OFFSET, SIZE, SIZE);
+        cells[i][j].setBounds((i + 1) * OFFSET + X_POS, (j + 1) * OFFSET + Y_POS, SIZE , SIZE );
         buttonStyle.up = whiteDrawable;
       }
     }
@@ -97,7 +101,7 @@ public class ChessBoardRenderer extends ApplicationAdapter {
       }
     }
     Rectangle rect = board.getCells()[i][j].getRectangle();
-    shapeRenderer.rect(rect.x + 100, rect.y + 100, rect.width, rect.height);
+    shapeRenderer.rect(rect.x + 100 + X_POS, rect.y + 100 + Y_POS, rect.width, rect.height);
     if (board.getCells()[i][j].isSelected) {
       shapeRenderer.setColor(0, 0.99f, 0.98f, 0.1f);
       shapeRenderer.circle(rect.x + 150, rect.y + 150, rect.width / 4);

@@ -42,10 +42,6 @@ public class ManaUI extends ApplicationAdapter {
 
   @Override
   public void render() {
-    manaAmount--;
-    if (manaAmount < 0) {
-      manaAmount = maxMana;
-    }
 
     shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
     shapeRenderer.setColor(Color.BLUE);

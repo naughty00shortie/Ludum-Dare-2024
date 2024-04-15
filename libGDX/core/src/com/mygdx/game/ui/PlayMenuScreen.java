@@ -112,10 +112,7 @@ public class PlayMenuScreen extends ApplicationAdapter {
     batch.begin();
     backgroundSprite.draw(batch);
     batch.end();
-
-
     stage.draw();
-
   }
 
   @Override
